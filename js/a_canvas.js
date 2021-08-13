@@ -318,6 +318,8 @@ function startFunction(){
     }
 
     ACanvas.objects.push(new Line(true));
+    ACanvas.scroll.x = + 220;
+    ACanvas.scroll.y = + 220;
 
     // user_selections by user
     ACanvas.user_selections = [];

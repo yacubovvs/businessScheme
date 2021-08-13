@@ -38,6 +38,16 @@ function Condition(visible){
         context.lineTo(x4, y4);
         context.lineTo(x1, y1);
         context.stroke();
+
+        let width = this.size.width*coordinates_realSize;
+        let height = this.size.height*coordinates_realSize;
+        let textSize = Math.min(width, height)/7;
+        if(textSize>20) textSize = 20;
+
+        context.font = "" + textSize + "px Tahoma";
+        context.fillStyle = "rgba(0,0,0,1)"; 
+        context.fillText("true", x - textSize*0.8, y - height + textSize*2);
+        context.fillText("false", x - textSize*1, y + height - textSize*2);
     }
 
     object._is_click_on_object = function(aCanvas, x_ac, y_ac){ 

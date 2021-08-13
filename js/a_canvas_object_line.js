@@ -53,7 +53,33 @@ function Line(visible){
         return this.visible; // need for redraw ACanvas
     }
 
-    object._is_click_on_object = function(aCanvas, x, y){return false;} 
+    object._is_click_on_object = function(aCanvas, x, y){
+        let coord = this.get_points_coordinates();
+        let coordinates_realSize = aCanvas._settings._draw_coordinates_size*aCanvas.zoom;
+
+        let realSize = Math.sqrt(Math.pow(coord.x1 - coord.x2,2) + Math.pow(coord.y1 - coord.y2,2))*coordinates_realSize;
+        let byMouseSize = (Math.sqrt(Math.pow(x - coord.x2,2) + Math.pow(y - coord.y2,2)) + Math.sqrt(Math.pow(x - coord.x1,2) + Math.pow(y - coord.y1,2)))*coordinates_realSize;
+        
+        if((byMouseSize - realSize)<1){
+            return true;
+        }
+        //console.log("Size1: " + Math.sqrt(Math.pow(coord.x1 - coord.x2,2) + Math.pow(coord.y1 - coord.y2,2)));
+        //console.log("Size2: " + Math.sqrt(Math.pow(x - coord.x2,2) + Math.pow(y - coord.y2,2)));
+        //console.log("Size3: " + Math.sqrt(Math.pow(x - coord.x1,2) + Math.pow(y - coord.y1,2)))
+        //console.log(coord);
+        //console.log("Def: " + (byMouseSize - realSize) );
+        //console.log(byMouseSize);
+        return false;
+    } 
+
+    object.get_points_coordinates = function(){
+        return {
+            x1: this.position.x,
+            y1: this.position.y,
+            x2: this.position.x + this.size.width,
+            y2: this.position.y + this.size.height,
+        };
+    }
 
     return object;
 }
