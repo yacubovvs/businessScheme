@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>ACanvas</title>
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/a_canvas.css">
+        <link rel="stylesheet" type="text/css" href="css/panels.css">
+        <script src="/js/common.js"></script>
+        <script src="/js/a_canvas.js"></script>
+        <script src="/js/a_canvas_object.js"></script>
+        <script src="/js/a_canvas_object_line.js"></script>
+        <script src="/js/a_canvas_object_condition.js"></script>
+        <script src="/js/a_canvas_object_comment.js"></script>
+        <script src="/js/a_canvas_object_start.js"></script>
+        <script src="/js/a_canvas_object_finish.js"></script>
+        <script src="/js/a_canvas_object_event.js"></script>
+        <script src="/js/panels.js"></script>
+    </head>
+    <body>
+        <canvas id="mainACanvas"></canvas>
+        <div class="fixed-pannel">
+            <div class="pannel-btn" onclick="pannel_line_clicked();"> <!-- pannel-btn-active class for active btn-->
+                <div class="pannel-btn-icon">
+                    <img src="images/icons/line.png">
+                </div>
+                <div class="pannel-btn-title">
+                    Line
+                </div>
+            </div>
+            <div class="pannel-btn" onclick="pannel_event_clicked();"> <!-- pannel-btn-active class for active btn-->
+                <div class="pannel-btn-icon">
+                    <img src="images/icons/event.png">
+                </div>
+                <div class="pannel-btn-title">
+                    Event
+                </div>
+            </div>
+            <div class="pannel-btn" onclick="pannel_condition_clicked()"> <!-- pannel-btn-active class for active btn-->
+                <div class="pannel-btn-icon">
+                    <img src="images/icons/condition.png">
+                </div>
+                <div class="pannel-btn-title">
+                    Condition
+                </div>
+            </div>
+            <div class="pannel-btn" onclick="pannel_start_clicked();"> <!-- pannel-btn-active class for active btn-->
+                <div class="pannel-btn-icon">
+                    <img src="images/icons/start.png">
+                </div>
+                <div class="pannel-btn-title">
+                    Start
+                </div>
+            </div>
+            <div class="pannel-btn" onclick="pannel_finish_clicked();"> <!-- pannel-btn-active class for active btn-->
+                <div class="pannel-btn-icon">
+                    <img src="images/icons/finish.png">
+                </div>
+                <div class="pannel-btn-title">
+                    Finish
+                </div>
+            </div>
+            <div class="pannel-btn" onclick="pannel_comment_clicked()"> <!-- pannel-btn-active class for active btn-->
+                <div class="pannel-btn-icon">
+                    <img src="images/icons/comment.png">
+                </div>
+                <div class="pannel-btn-title">
+                    Comment
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

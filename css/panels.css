@@ -1,0 +1,28 @@
+.fixed-pannel{
+    position: fixed;
+    width: 70px;
+    top: 70px;
+    right: 0px;
+    background-color: rgb(200,200,200);
+    border-radius: 6px 0 0 6px;
+}
+
+.pannel-btn-active{
+    background-color: white;
+}
+
+.pannel-btn{
+    padding: 7px 0px;
+    margin: 5px;
+    width: calc(100% - 10px);
+    text-align: center;
+    border-radius: 6px;
+}
+
+.pannel-btn:hover {
+    background-color: rgb(180,180,180);
+}
+
+.pannel-btn-icon img{
+    width: 70%;
+}
