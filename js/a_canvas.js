@@ -39,9 +39,34 @@ function startFunction(){
 
     };
     
-    // Значения координат прокруток
+    // Deleting functions
+    ACanvas.delete_selected_objects = function(){
+        for(let obj_i in this.user_selections){
+            let object = this.user_selections[obj_i];
+            if(this.delete_object(object)){
+                this.user_selections.splice(obj_i,1);
+                this.delete_selected_objects();
+                return;
+            }
+        }
+        this.draw();
+    }
+    
+    ACanvas.delete_object = function(object_to_delete){
+        for(let obj_i in this.objects){
+            let object = this.objects[obj_i];
+            if(object==object_to_delete){
+                //console.log("Deleting object " + object.id);
+                this.objects.splice(obj_i,1);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Screen scrolls values
     ACanvas.scroll = {x: 0,y: 0,};
-    // Значение приближения
+    // Zoom value
     ACanvas.zoom = 1
 
     // Flag on object resize

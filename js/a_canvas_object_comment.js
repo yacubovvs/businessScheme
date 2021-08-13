@@ -22,41 +22,14 @@ function Comment(visible){
         let width = this.size.width*coordinates_realSize;
         let height = this.size.height*coordinates_realSize;
 
+        
         context.beginPath();
         context.strokeStyle = this.color; 
         context.fillStyle = this.colorFill; 
-
+        context.lineWidth = 2;
         context.fillRect(x - width, y - height, 2*width, 2*height);
         context.strokeRect(x - width, y - height, 2*width, 2*height);
-
-        /*context.moveTo(x1, y1);
-        context.lineTo(x2, y2);
-        context.lineTo(x3, y3);
-        context.lineTo(x4, y4);
-        context.lineTo(x1, y1);*/
-        
-        /*
-        let x1 = x-this.size.width*coordinates_realSize;
-        let y1 = y;
-
-        let x2 = x;
-        let y2 = y-this.size.height*coordinates_realSize;
-
-        let x3 = x+this.size.width*coordinates_realSize;
-        let y3 = y;
-
-        let x4 = x;
-        let y4 = y+this.size.height*coordinates_realSize;
-
-        context.beginPath();
-        context.strokeStyle = this.color; 
-        context.moveTo(x1, y1);
-        context.lineTo(x2, y2);
-        context.lineTo(x3, y3);
-        context.lineTo(x4, y4);
-        context.lineTo(x1, y1);
-        context.stroke();
-        */
+        context.lineWidth = 1;
     }
 
     return object;

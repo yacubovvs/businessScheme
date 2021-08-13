@@ -25,7 +25,7 @@ function Event(visible){
         context.beginPath();
         context.strokeStyle = this.color; 
         context.fillStyle = this.colorFill;
-        let lineWidth = 3; 
+        let lineWidth = 2; 
         let radius = Math.min(width/3,height/3);
 
         //drawCircle(context, x, y, radius, lineWidth, true, true, this.color, this.colorFill);

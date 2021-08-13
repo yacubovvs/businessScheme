@@ -2,8 +2,8 @@ function Start(visible){
     let object = new Canvas_object(visible);
 
     object.type = "start";
-    object.size.width = 2;
-    object.size.height = 2;
+    object.size.width = 1;
+    object.size.height = 1;
     object.color = "rgba(0,255,0,1)";
     object.colorFill = "rgba(0,255,0,0.1)";
 
@@ -25,7 +25,7 @@ function Start(visible){
         context.beginPath();
         context.strokeStyle = this.color; 
         context.fillStyle = this.colorFill;
-        let lineWidth = 3; 
+        let lineWidth = 2; 
         let radius = Math.min(width, height)
 
         drawCircle(context, x, y, radius, lineWidth, true, true, this.color, this.colorFill);

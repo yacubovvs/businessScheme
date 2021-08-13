@@ -31,6 +31,7 @@ function Condition(visible){
         let x4 = x;
         let y4 = y+this.size.height*coordinates_realSize;
 
+        context.lineWidth = 2;
         context.beginPath();
         context.strokeStyle = this.color; 
         context.moveTo(x1, y1);
@@ -39,6 +40,7 @@ function Condition(visible){
         context.lineTo(x4, y4);
         context.lineTo(x1, y1);
         context.stroke();
+        context.lineWidth = 1;
 
         let width = this.size.width*coordinates_realSize;
         let height = this.size.height*coordinates_realSize;

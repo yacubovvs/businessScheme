@@ -4,7 +4,7 @@ function Line(visible){
     object.type = "line";
     object.size.width = 0;
     object.size.height = 1;
-    object.color = "rgba(255,0,0,1)";
+    object.color = "rgba(196, 0, 0, 1)";
 
     object.positionSetted = false;
 
@@ -21,9 +21,11 @@ function Line(visible){
         let y1 = this.position.y*coordinates_realSize + drawing_shift_y;
         let x2 = (this.position.x + this.size.width)*coordinates_realSize + drawing_shift_x;
         let y2 = (this.position.y + this.size.height)*coordinates_realSize + drawing_shift_y;
+        context.lineWidth = 2;
         context.moveTo(x1, y1);
         context.lineTo(x2, y2);
         context.stroke();
+        context.lineWidth = 1;
     }
 
     object.draw_user_selection = function(aCanvas, context){
@@ -60,19 +62,19 @@ function Line(visible){
         let x2 = (this.position.x + this.size.width)*coordinates_realSize + drawing_shift_x + aCanvas._settings._selection_points_size_px/2;
         let y2 = (this.position.y + this.size.height)*coordinates_realSize + drawing_shift_y - aCanvas._settings._selection_points_size_px/2;
 
-        console.log(x-x1);
+        //console.log(x-x1);
 
         if(
             x-x1<=aCanvas._settings._selection_points_size_px && x-x1>=0
             && y-y1<=aCanvas._settings._selection_points_size_px && y-y1>=0
         ){
-            console.log("Click on 1 user selection");
+            //console.log("Click on 1 user selection");
             return 1; //1;
         }else if(
             x2-x<=aCanvas._settings._selection_points_size_px && x2-x>=0
             && y-y2<=aCanvas._settings._selection_points_size_px && y-y2>=0
         ){
-            console.log("Click on 2 user selection");
+            //console.log("Click on 2 user selection");
             return 2; //2;
         }
 
