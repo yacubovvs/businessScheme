@@ -1,6 +1,7 @@
 function Comment(visible){
     let object = new Canvas_object(visible);
 
+    object.type = "comment";
     object.size.width = 2;
     object.size.height = 2;
     object.color = "rgba(0,0,0,1)";

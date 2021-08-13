@@ -1,6 +1,7 @@
 function Finish(visible){
     let object = new Canvas_object(visible);
 
+    object.type = "finish";
     object.size.width = 2;
     object.size.height = 2;
     object.color = "rgba(255,0,0,1)";

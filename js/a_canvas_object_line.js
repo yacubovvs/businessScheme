@@ -1,6 +1,7 @@
 function Line(visible){
     let object = new Canvas_object(visible);
 
+    object.type = "line";
     object.size.width = 0;
     object.size.height = 1;
     object.color = "rgba(255,0,0,1)";
@@ -24,6 +25,115 @@ function Line(visible){
         context.lineTo(x2, y2);
         context.stroke();
     }
+
+    object.draw_user_selection = function(aCanvas, context){
+        let coordinates_realSize = aCanvas._settings._draw_coordinates_size*aCanvas.zoom;
+        let drawing_shift_x = aCanvas._get_drawing_shift_x();
+        let drawing_shift_y = aCanvas._get_drawing_shift_y();
+        
+        let x1 = (this.position.x)*coordinates_realSize + drawing_shift_x;
+        let y1 = (this.position.y)*coordinates_realSize + drawing_shift_y;
+
+        let x2 = (this.position.x + this.size.width)*coordinates_realSize + drawing_shift_x;
+        let y2 = (this.position.y + this.size.height)*coordinates_realSize + drawing_shift_y;
+
+
+        context.strokeStyle = aCanvas._settings._selection_points_color_border; 
+        context.fillStyle = aCanvas._settings._selection_points_color_fill; 
+        
+        context.fillRect(x1 - aCanvas._settings._selection_points_size_px/2, y1 -  aCanvas._settings._selection_points_size_px/2, aCanvas._settings._selection_points_size_px, aCanvas._settings._selection_points_size_px);
+        context.strokeRect(x1 - aCanvas._settings._selection_points_size_px/2, y1 -  aCanvas._settings._selection_points_size_px/2, aCanvas._settings._selection_points_size_px, aCanvas._settings._selection_points_size_px);
+
+        context.fillRect(x2 + aCanvas._settings._selection_points_size_px/2, y2 -  aCanvas._settings._selection_points_size_px/2, -aCanvas._settings._selection_points_size_px, aCanvas._settings._selection_points_size_px);
+        context.strokeRect(x2 + aCanvas._settings._selection_points_size_px/2, y2 -  aCanvas._settings._selection_points_size_px/2, -aCanvas._settings._selection_points_size_px, aCanvas._settings._selection_points_size_px);
+
+    }
+
+    object.is_on_user_selection_click = function(aCanvas, x, y){
+        let coordinates_realSize = aCanvas._settings._draw_coordinates_size*aCanvas.zoom;
+        let drawing_shift_x = aCanvas._get_drawing_shift_x();
+        let drawing_shift_y = aCanvas._get_drawing_shift_y();
+        
+        let x1 = (this.position.x)*coordinates_realSize + drawing_shift_x - aCanvas._settings._selection_points_size_px/2;
+        let y1 = (this.position.y)*coordinates_realSize + drawing_shift_y - aCanvas._settings._selection_points_size_px/2;
+
+        let x2 = (this.position.x + this.size.width)*coordinates_realSize + drawing_shift_x + aCanvas._settings._selection_points_size_px/2;
+        let y2 = (this.position.y + this.size.height)*coordinates_realSize + drawing_shift_y - aCanvas._settings._selection_points_size_px/2;
+
+        console.log(x-x1);
+
+        if(
+            x-x1<=aCanvas._settings._selection_points_size_px && x-x1>=0
+            && y-y1<=aCanvas._settings._selection_points_size_px && y-y1>=0
+        ){
+            console.log("Click on 1 user selection");
+            return 1; //1;
+        }else if(
+            x2-x<=aCanvas._settings._selection_points_size_px && x2-x>=0
+            && y-y2<=aCanvas._settings._selection_points_size_px && y-y2>=0
+        ){
+            console.log("Click on 2 user selection");
+            return 2; //2;
+        }
+
+        return -1;
+        
+    }
+
+    object.is_on_user_selection_resize = function(aCanvas, select_point, x_last, y_last, x, y){
+        
+        let dx = x_last - x;
+        let dy = y_last - y;
+
+        //x = Math.floor((x_last - dx)/2);
+        //y = Math.floor((y_last - dy)/2);
+        
+
+        if(
+            this.resize_point_start.x != x_last
+            || this.resize_point_start.y != y_last
+            || this.resize_point.y != y
+            || this.resize_point.x != x
+            
+        ){
+            if(this.resize_point_start.x != x_last
+            || this.resize_point_start.y != y_last){
+                this.resize_point_start.x = x_last;
+                this.resize_point_start.y = y_last;
+                this.resize_point.y = y;
+                this.resize_point.x = x;
+                return true;
+            }
+
+            //let x_change = Math.floor((x - this.resize_point.x)/2)*2;
+            //let y_change = Math.floor((y - this.resize_point.y)/2)*2;
+
+            let x_change = x - this.resize_point.x;
+            let y_change = y - this.resize_point.y;
+
+            if(select_point==1){
+                this.size.width -= x_change; 
+                this.size.height -= y_change;                 
+                this.position.x += x_change;
+                this.position.y += y_change;
+            }else if(select_point==2){
+                this.size.width += x_change; 
+                this.size.height += y_change; 
+                //this.position.x += x_change;
+                //this.position.y += y_change;
+            }
+            
+
+            this.resize_point.y = y;
+            this.resize_point.x = x;
+            //console.log("Redraw on resize!");
+            return true;
+            
+        }
+        
+        return false; // true for need to redraw
+    }
+
 
     object.user_start_draw_click = function(aCanvas, x, y){
         //console.log("user_start_draw_click")

@@ -1,5 +1,6 @@
 function Canvas_object(visible){
     let canvas_object = {};
+    canvas_object.type = "";
 
     canvas_object.position = {x:0,y:0};
     canvas_object.size = {height:1, width:1}
@@ -105,37 +106,25 @@ function Canvas_object(visible){
         let x4 = (this.position.x - this.size.width)*coordinates_realSize + drawing_shift_x;
         let y4 = (this.position.y + this.size.height)*coordinates_realSize + drawing_shift_y;
 
-        //x1, y1, aCanvas._settings._selection_points_size_px, aCanvas._settings._selection_points_size_px
-        //x2, y2, -aCanvas._settings._selection_points_size_px, aCanvas._settings._selection_points_size_px
-        //x3, y3, -aCanvas._settings._selection_points_size_px, -aCanvas._settings._selection_points_size_px
-        //x4, y4, aCanvas._settings._selection_points_size_px, -aCanvas._settings._selection_points_size_px
-
-        //console.log(x1-x);
-        //console.log(aCanvas._settings._selection_points_size_px);
-        //console.log("------");
         if(
             x-x1<=aCanvas._settings._selection_points_size_px && x-x1>=0
             && y-y1<=aCanvas._settings._selection_points_size_px && y-y1>=0
         ){
-            //console.log("Click on 1 user selection");
             return 1;
         }else if(
             x2-x<=aCanvas._settings._selection_points_size_px && x2-x>=0
             && y-y2<=aCanvas._settings._selection_points_size_px && y-y2>=0
         ){
-            //console.log("Click on 2 user selection");
             return 2;
         }else if(
             x3-x<=aCanvas._settings._selection_points_size_px && x3-x>=0
             && y3-y<=aCanvas._settings._selection_points_size_px && y3-y>=0
         ){
-            //console.log("Click on 3 user selection");
             return 3;
         }else if(
             x-x4<=aCanvas._settings._selection_points_size_px && x-x4>=0
             && y4-y<=aCanvas._settings._selection_points_size_px && y4-y>=0
         ){
-            //console.log("Click on 4 user selection");
             return 4;
         }
 

@@ -1,6 +1,7 @@
 function Event(visible){
     let object = new Canvas_object(visible);
 
+    object.type = "event";
     object.size.width = 2;
     object.size.height = 2;
     object.color = "rgba(0,0,0,1)";
@@ -25,7 +26,7 @@ function Event(visible){
         context.strokeStyle = this.color; 
         context.fillStyle = this.colorFill;
         let lineWidth = 3; 
-        let radius = width/3;
+        let radius = Math.min(width/3,height/3);
 
         //drawCircle(context, x, y, radius, lineWidth, true, true, this.color, this.colorFill);
         roundedRect(context, x-width, y-height, width*2, height*2, radius, lineWidth, true, true, this.color, this.colorFill);

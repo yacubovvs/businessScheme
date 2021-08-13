@@ -1,6 +1,7 @@
 function Start(visible){
     let object = new Canvas_object(visible);
 
+    object.type = "start";
     object.size.width = 2;
     object.size.height = 2;
     object.color = "rgba(0,255,0,1)";
