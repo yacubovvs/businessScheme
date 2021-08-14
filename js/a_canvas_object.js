@@ -196,9 +196,69 @@ function Canvas_object(visible){
         return false; // true for need to redraw
     }
 
+    canvas_object.get_coordinates_of_input_points = function(){
+        return [
+            {
+                x: this.position.x - this.size.width,
+                y: this.position.y,
+            }
+        ];
+    }
+
+    canvas_object.get_coordinates_of_output_points = function(){
+        return [
+            {
+                x: this.position.x + this.size.width,
+                y: this.position.y,
+            }
+        ];
+    }
+
+    canvas_object.drawInputPoints = function(aCanvas, context){
+        let input_points = this.get_coordinates_of_input_points();
+        let output_points = this.get_coordinates_of_output_points();
+
+        let coordinates_realSize = aCanvas._settings._draw_coordinates_size*aCanvas.zoom;
+        let drawing_shift_x = aCanvas._get_drawing_shift_x();
+        let drawing_shift_y = aCanvas._get_drawing_shift_y();
+
+        
+        for (let point_i in input_points){
+
+            let point = input_points[point_i];
+
+            let radius = 7; // (px)
+            let lineWidth = 2;
+            let stroke = true;
+            let fill = true;
+            let color_stroke = "rgba(0,255,0,1)";
+            let color_filling = "rgba(0,255,0,0.5)";
+
+            let x = point.x*coordinates_realSize + drawing_shift_x;
+            let y = point.y*coordinates_realSize + drawing_shift_y;
+
+            drawCircle(context, x, y, radius, lineWidth, stroke, fill, color_stroke, color_filling);
+        }
+
+        for (let point_i in output_points){
+
+            let point = output_points[point_i];
+            
+            let radius = 7; // (px)
+            let lineWidth = 2;
+            let stroke = true;
+            let fill = true;
+            let color_stroke = "rgba(255,0,0,1)";
+            let color_filling = "rgba(255,0,0,0.5)";
+
+            let x = point.x*coordinates_realSize + drawing_shift_x;
+            let y = point.y*coordinates_realSize + drawing_shift_y;
+
+            drawCircle(context, x, y, radius, lineWidth, stroke, fill, color_stroke, color_filling);
+        }
+    }
+
+
     return canvas_object;
 }
 
-function get_uid(){
-    return Math.random().toString(32).slice(2);
-}

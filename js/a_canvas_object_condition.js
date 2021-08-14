@@ -81,5 +81,18 @@ function Condition(visible){
         }else return false;
     };
 
+    object.get_coordinates_of_output_points = function(){
+        return [
+            {
+                x: this.position.x,
+                y: this.position.y + this.size.height,
+            },
+            {
+                x: this.position.x,
+                y: this.position.y - this.size.height,
+            }
+        ];
+    }
+
     return object;
 }

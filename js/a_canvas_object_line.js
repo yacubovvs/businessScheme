@@ -172,15 +172,9 @@ function Line(visible){
         let realSize = Math.sqrt(Math.pow(coord.x1 - coord.x2,2) + Math.pow(coord.y1 - coord.y2,2))*coordinates_realSize;
         let byMouseSize = (Math.sqrt(Math.pow(x - coord.x2,2) + Math.pow(y - coord.y2,2)) + Math.sqrt(Math.pow(x - coord.x1,2) + Math.pow(y - coord.y1,2)))*coordinates_realSize;
         
-        if((byMouseSize - realSize)<1){
+        if((byMouseSize - realSize)<1.5){
             return true;
         }
-        //console.log("Size1: " + Math.sqrt(Math.pow(coord.x1 - coord.x2,2) + Math.pow(coord.y1 - coord.y2,2)));
-        //console.log("Size2: " + Math.sqrt(Math.pow(x - coord.x2,2) + Math.pow(y - coord.y2,2)));
-        //console.log("Size3: " + Math.sqrt(Math.pow(x - coord.x1,2) + Math.pow(y - coord.y1,2)))
-        //console.log(coord);
-        //console.log("Def: " + (byMouseSize - realSize) );
-        //console.log(byMouseSize);
         return false;
     } 
 
@@ -191,6 +185,41 @@ function Line(visible){
             x2: this.position.x + this.size.width,
             y2: this.position.y + this.size.height,
         };
+    }
+
+    object.get_related_lines = function(aCanvas, related_lines){
+        let coordinates = this.get_points_coordinates()
+        
+        if(typeof(related_lines)!="object"){
+            related_lines = [];
+        }
+
+        for(let obj_i in aCanvas.objects){
+            let object = aCanvas.objects[obj_i]
+            if(object.type=="line"){
+                let coordinates2 = object.get_points_coordinates();
+                if(
+                    (coordinates.x1==coordinates2.x1 && coordinates.y1==coordinates2.y1) ||
+                    (coordinates.x2==coordinates2.x1 && coordinates.y2==coordinates2.y1) ||
+                    (coordinates.x1==coordinates2.x2 && coordinates.y1==coordinates2.y2) ||
+                    (coordinates.x2==coordinates2.x2 && coordinates.y2==coordinates2.y2)
+                ){
+                    if(related_lines.indexOf(object)==-1){
+                        related_lines.push(object);
+                        object.get_related_lines(aCanvas, related_lines);
+                    }
+                }
+            }
+        }
+        return related_lines;
+    }
+
+    object.get_coordinates_of_input_points = function(){
+        return [];
+    }
+
+    object.get_coordinates_of_output_points = function(){
+        return [];
     }
 
     return object;

@@ -30,7 +30,8 @@ function startFunction(){
         _draw_coordinates_size: 50,
         
         // Изменение зума за одно нажатие
-        _zoom_size_change: 1.02,
+        //_zoom_size_change: 1.02, // For mac
+        _zoom_size_change: 1.1, // For other
 
         // Selection points
         _selection_points_color_border: "rgb(28,28,28)",
@@ -71,6 +72,8 @@ function startFunction(){
 
     // Flag on object resize
     ACanvas._is_Object_resizing = false;
+    ACanvas._main_resizing_object = undefined;
+    ACanvas._main_resizing_object_related_objects = undefined;
     ACanvas._object_resize_point = -1;
 
     // Flag of moving object by user
@@ -127,11 +130,13 @@ function startFunction(){
         // Drawing objects
         for(let obj in this.objects){
             this.objects[obj].draw(this, context);
+            this.objects[obj].drawInputPoints(this, context);
         }
 
         // Drawing current draw object by user
         if(this.userDrawing_object!=undefined){
             this.userDrawing_object.draw(this, context);
+            this.userDrawing_object.drawInputPoints(this, context);
         }
 
         // Drawing user selections
@@ -215,6 +220,7 @@ function startFunction(){
             let object = this.user_selections[objects_i];
             let object_resize_point = object.is_on_user_selection_click(this, event.x, event.y);
             if(object_resize_point!=-1){
+                this._main_resizing_object = object;
                 this._is_Object_resizing = true;
                 this._object_resize_point = object_resize_point;
                 return;
@@ -245,26 +251,47 @@ function startFunction(){
 
             if(!this._is_Object_resizing){ // if not clicked on user selection
                 if(this.user_selections.length!=0) needDraw = true;
-                    this.user_selections = [];
+                    //this.user_selections = [];
                     if(this.userDrawing_object!=undefined){
                         let position = this._get_position_by_coordinates(event.x, event.y);
                         this.userDrawing_object.user_start_draw_click(this, position.x, position.y);
                     }else{
                         // Just a mouse click, checking objects for clicking
                         let click_position = this._get_position_by_coordinates_raw(event.x, event.y);
+                        let clickOnObject = false;
                         for(object_i in this.objects){
                             let object = this.objects[object_i];
                             
                             if(object._is_click_on_object(this, click_position.x, click_position.y)){
-                                //console.log("Clicked on object " + object.id);
-                                //console.log(object);
-                                this.user_selections.push(object);
+                                clickOnObject = true;
+                                //console.log(this.user_selections);
+                                if(object.type == "line" && this.user_selections.indexOf(object)==-1){
+                                    // Select all releated lines
+                                    this.user_selections = [];
+                                    let lines_array = object.get_related_lines(this, [object]);
+                                    for(let obj_i in lines_array){
+                                        let obj = lines_array[obj_i];
+                                        this.user_selections.push(obj);
+                                    }
+                                }else{
+                                    //console.log("Not line selected");
+                                    this.user_selections = [];
+                                    this.user_selections.push(object);
+                                }
+                                
                                 needDraw = true;
                             }
+                            
+                        }
+                        if(!clickOnObject){
+                            //console.log("Nothing selected");
+                            this.user_selections = [];
                         }
                 }
             }else{
                 this._is_Object_resizing = false;
+                this._main_resizing_object = undefined;
+                this._main_resizing_object_related_objects = undefined;
                 this._object_resize_point = -1;
             }
             
@@ -280,14 +307,55 @@ function startFunction(){
         let needDraw = false;
         
         if(this._is_Object_resizing){
-            for(let objects_i in this.user_selections){
-                let object = this.user_selections[objects_i];
-                
+            if(this._main_resizing_object==undefined || this._main_resizing_object.type!="line"){
+                for(let objects_i in this.user_selections){
+                    let object = this.user_selections[objects_i];
+                    
+                    let position_last = this._get_position_by_coordinates(this._mouse_drag_start.x, this._mouse_drag_start.y);
+                    let position_current = this._get_position_by_coordinates(event.x, event.y);
+                    needDraw = needDraw || object.is_on_user_selection_resize(this, this._object_resize_point, position_last.x, position_last.y, position_current.x, position_current.y);
+                }
+            }else{
+                let object_resize = this._main_resizing_object;
+                    
                 let position_last = this._get_position_by_coordinates(this._mouse_drag_start.x, this._mouse_drag_start.y);
                 let position_current = this._get_position_by_coordinates(event.x, event.y);
-                needDraw = object.is_on_user_selection_resize(this, this._object_resize_point, position_last.x, position_last.y, position_current.x, position_current.y);
+                needDraw = needDraw || object_resize.is_on_user_selection_resize(this, this._object_resize_point, position_last.x, position_last.y, position_current.x, position_current.y);
+
+                // searching for second part of line (is dot is in center of multiline)
+                //let secondObjectFound = false;
+                if(this._main_resizing_object_related_objects == undefined){
+                    this._main_resizing_object_related_objects = [];
+                    for(let objects_i in this.user_selections){
+                        let object = this.user_selections[objects_i];
+                        let object_resize_point = object.is_on_user_selection_click(this, this._mouse_drag_start.x, this._mouse_drag_start.y);
+                        //let object_resize_point = object.is_on_user_selection_click(this, event.x, event.y);
+                        if(object_resize_point!=-1){
+                            secondObjectFound = true;
+                            //console.log("Found releated nearest object");
+                            needDraw = needDraw || object.is_on_user_selection_resize(this, object_resize_point, position_last.x, position_last.y, position_current.x, position_current.y);
+                            this._main_resizing_object_related_objects.push(
+                                {
+                                    object: object,
+                                    object_resize_point: object_resize_point
+                                }
+                            );
+                        }
+                    }
+                }else{
+                    // Related objects to resize allready found
+                    for(let objects_i in this._main_resizing_object_related_objects){
+                        object_struct = this._main_resizing_object_related_objects[objects_i];
+                        needDraw = needDraw || object_struct.object.is_on_user_selection_resize(this, object_struct.object_resize_point, position_last.x, position_last.y, position_current.x, position_current.y);
+                    }
+                }
+                //if(!secondObjectFound) console.log("Line object not found");
+                //console.log(this._main_resizing_object);
+                //console.log(this._mouse_drag_start.x, this._mouse_drag_start.y);
+                //console.log(this._mouse_position.x, this._mouse_position.y);
                 
             }
+
             if(needDraw) this.draw();
             return;
         }
@@ -341,10 +409,6 @@ function startFunction(){
         if(needDraw) this.draw();
         
     }
-
-    ACanvas.objects.push(new Line(true));
-    ACanvas.scroll.x = + 220;
-    ACanvas.scroll.y = + 220;
 
     // user_selections by user
     ACanvas.user_selections = [];

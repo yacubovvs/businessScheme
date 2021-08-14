@@ -47,4 +47,8 @@ function roundedRect(context, x, y, width, height, radius, lineWidth, stroke, fi
     if(fill) context.fill();
 
     context.lineWidth = 1;
-  }
+}
+
+function get_uid(){
+    return Math.random().toString(32).slice(2);
+}
