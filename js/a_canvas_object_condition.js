@@ -1,5 +1,5 @@
-function Condition(visible){
-    let object = new Canvas_object(visible);
+function Condition(object_to_load){
+    let object = new Canvas_object(object_to_load);
 
     object.type = "condition";
     object.size.width = 2;

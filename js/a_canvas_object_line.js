@@ -1,6 +1,7 @@
-function Line(visible){
-    let object = new Canvas_object(visible);
+function Line(object_to_load){
+    let object = new Canvas_object(object_to_load);
 
+    object.visible = false;
     object.type = "line";
     object.size.width = 0;
     object.size.height = 1;

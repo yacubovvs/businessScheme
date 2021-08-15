@@ -1,5 +1,5 @@
-function Comment(visible){
-    let object = new Canvas_object(visible);
+function Comment(object_to_load){
+    let object = new Canvas_object(object_to_load);
 
     object.type = "comment";
     object.size.width = 2;
@@ -8,6 +8,14 @@ function Comment(visible){
     object.colorFill = "rgba(255,255,255,0.5)";
 
     object.visible = true;
+
+    object.get_coordinates_of_input_points = function(){
+        return [];
+    }
+
+    object.get_coordinates_of_output_points = function(){
+        return [];
+    }
 
     object.draw = function(aCanvas, context){
         if(!this.visible) return;

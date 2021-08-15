@@ -1,5 +1,5 @@
-function Event(visible){
-    let object = new Canvas_object(visible);
+function Event(object_to_load){
+    let object = new Canvas_object(object_to_load);
 
     object.type = "event";
     object.size.width = 2;

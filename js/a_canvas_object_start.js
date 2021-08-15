@@ -1,5 +1,5 @@
-function Start(visible){
-    let object = new Canvas_object(visible);
+function Start(loaded_object){
+    let object = new Canvas_object(loaded_object);
 
     object.type = "start";
     object.size.width = 1;
@@ -29,6 +29,10 @@ function Start(visible){
         let radius = Math.min(width, height)
 
         drawCircle(context, x, y, radius, lineWidth, true, true, this.color, this.colorFill);
+    }
+
+    object.get_coordinates_of_input_points = function(){
+        return [];
     }
 
     return object;

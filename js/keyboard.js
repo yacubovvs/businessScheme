@@ -1,13 +1,6 @@
 addEventListener('keydown', (e) => {
     if(e.code=="Escape"){
-        ACanvas.userDrawing_object = undefined;
-        ACanvas.selecting_dot = false;
-        ACanvas._is_Object_resizing = false;
-        ACanvas._object_resize_point = -1;
-        ACanvas._object_user_moving = false;
-        ACanvas.user_selections = [];
-        ACanvas._main_resizing_object = undefined;
-        ACanvas._main_resizing_object_related_objects = undefined;
+        ACanvas.reset_any_actions();
         ACanvas.draw();
     }else if(e.code=="KeyL"){
         pannel_line_clicked();

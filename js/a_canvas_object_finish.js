@@ -1,5 +1,5 @@
-function Finish(visible){
-    let object = new Canvas_object(visible);
+function Finish(object_to_load){
+    let object = new Canvas_object(object_to_load);
 
     object.type = "finish";
     object.size.width = 1;
@@ -8,6 +8,10 @@ function Finish(visible){
     object.colorFill = "rgba(255,0,0,0.1)";
 
     object.visible = true;
+
+    object.get_coordinates_of_output_points = function(){
+        return [];
+    }
 
     object.draw = function(aCanvas, context){
         if(!this.visible) return;

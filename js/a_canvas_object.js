@@ -1,4 +1,4 @@
-function Canvas_object(visible){
+function Canvas_object(object_to_load){
     let canvas_object = {};
     canvas_object.type = "";
 
@@ -12,8 +12,7 @@ function Canvas_object(visible){
     canvas_object.resize_point_start = {x:0,y:0};
     canvas_object.resize_point = {x:0,y:0};
     
-    if(visible) canvas_object.visible = true;
-    else canvas_object.visible = false;
+    canvas_object.visible = true;
 
     canvas_object.draw = function(aCanvas, context){}
     canvas_object.user_start_draw_click = function(aCanvas, x, y){
@@ -227,12 +226,12 @@ function Canvas_object(visible){
 
             let point = input_points[point_i];
 
-            let radius = 7; // (px)
-            let lineWidth = 2;
-            let stroke = true;
-            let fill = true;
-            let color_stroke = "rgba(0,255,0,1)";
-            let color_filling = "rgba(0,255,0,0.5)";
+            let radius          = aCanvas._settings._input_points_radius; // (px)
+            let lineWidth       = aCanvas._settings._input_points_lineWidth;
+            let stroke          = aCanvas._settings._input_points_stroke;
+            let fill            = aCanvas._settings._input_points_fill;
+            let color_stroke    = aCanvas._settings._input_points_color_stroke;
+            let color_filling   = aCanvas._settings._input_points_color_filling;
 
             let x = point.x*coordinates_realSize + drawing_shift_x;
             let y = point.y*coordinates_realSize + drawing_shift_y;
@@ -244,12 +243,12 @@ function Canvas_object(visible){
 
             let point = output_points[point_i];
             
-            let radius = 7; // (px)
-            let lineWidth = 2;
-            let stroke = true;
-            let fill = true;
-            let color_stroke = "rgba(255,0,0,1)";
-            let color_filling = "rgba(255,0,0,0.5)";
+            let radius          = aCanvas._settings._output_points_radius; // (px)
+            let lineWidth       = aCanvas._settings._output_points_lineWidth;
+            let stroke          = aCanvas._settings._output_points_stroke;
+            let fill            = aCanvas._settings._output_points_fill;
+            let color_stroke    = aCanvas._settings._output_points_color_stroke;
+            let color_filling   = aCanvas._settings._output_points_color_filling;
 
             let x = point.x*coordinates_realSize + drawing_shift_x;
             let y = point.y*coordinates_realSize + drawing_shift_y;
@@ -261,4 +260,3 @@ function Canvas_object(visible){
 
     return canvas_object;
 }
-

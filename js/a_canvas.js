@@ -7,7 +7,9 @@ function startFunction(){
     ACanvas = document.getElementById('mainACanvas');
     ACanvas.initted = false; // Флаг инициализации
     ACanvas.selecting_dot = false;
+    ACanvas.app_version = 1;
 
+    ACanvas.project_name = "new Project";
     // Инициализация настроек
     ACanvas._settings = {
         // Задний фон
@@ -37,6 +39,22 @@ function startFunction(){
         _selection_points_color_border: "rgb(28,28,28)",
         _selection_points_color_fill: "rgb(220,220,220)",
         _selection_points_size_px: 10,
+
+        // Output points settings
+        _input_points_radius: 7, // (px)
+        _input_points_lineWidth: 2,
+        _input_points_stroke: true,
+        _input_points_fill: true,
+        _input_points_color_stroke: "rgba(0,255,0,1)",
+        _input_points_color_filling: "rgba(0,255,0,0.5)",
+
+        // Input points settings
+        _output_points_radius: 7, // (px)
+        _output_points_lineWidth: 2,
+        _output_points_stroke: true,
+        _output_points_fill: true,
+        _output_points_color_stroke: "rgba(255,0,0,1)",
+        _output_points_color_filling: "rgba(255,0,0,0.5)",
 
     };
     
@@ -408,6 +426,17 @@ function startFunction(){
 
         if(needDraw) this.draw();
         
+    }
+
+    ACanvas.reset_any_actions = function(){
+        this.userDrawing_object = undefined;
+        this.selecting_dot = false;
+        this._is_Object_resizing = false;
+        this._object_resize_point = -1;
+        this._object_user_moving = false;
+        this.user_selections = [];
+        this._main_resizing_object = undefined;
+        this._main_resizing_object_related_objects = undefined;
     }
 
     // user_selections by user

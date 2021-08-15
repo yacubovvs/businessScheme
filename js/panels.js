@@ -35,3 +35,17 @@ function pannel_event_clicked(){
     ACanvas.userDrawing_object = new Event(); // Передаем новый создаваемый объект
     ACanvas.selecting_dot = true; // Устанавливаем параметр на выделение ближайших точек
 }
+
+function pannel_save_clicked(){
+    let save_struct = {
+        app_version: ACanvas.app_version,
+        project_name: ACanvas.project_name,
+        objects: ACanvas.objects,
+    }
+    var string = JSON.stringify(save_struct);
+    var blob = new Blob([string], {type: "text/plain"});
+    var link = document.createElement("a");
+    link.setAttribute("href", URL.createObjectURL(blob));
+    link.setAttribute("download", ACanvas.project_name + ".cbs");
+    link.click();
+}
