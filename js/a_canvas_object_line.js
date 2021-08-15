@@ -204,7 +204,14 @@ function Line(object_to_load){
                     (coordinates.x1==coordinates2.x1 && coordinates.y1==coordinates2.y1) ||
                     (coordinates.x2==coordinates2.x1 && coordinates.y2==coordinates2.y1) ||
                     (coordinates.x1==coordinates2.x2 && coordinates.y1==coordinates2.y2) ||
-                    (coordinates.x2==coordinates2.x2 && coordinates.y2==coordinates2.y2)
+                    (coordinates.x2==coordinates2.x2 && coordinates.y2==coordinates2.y2) ||
+
+                    checkLinesCrossing(
+                        {x: coordinates.x1, y: coordinates.y1},
+                        {x: coordinates.x2, y: coordinates.y2},
+                        {x: coordinates2.x1, y: coordinates2.y1},
+                        {x: coordinates2.x2, y: coordinates2.y2}
+                    )
                 ){
                     if(related_lines.indexOf(object)==-1){
                         related_lines.push(object);
