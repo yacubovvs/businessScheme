@@ -149,7 +149,8 @@ function Line(object_to_load){
             this.visible = true;
         }else{
             aCanvas.objects.push(this);
-            let newObject = new Line(true);
+            let newObject = new Line();
+            newObject.visible = true;
             newObject.position.x = x;
             newObject.position.y = y;
             newObject.positionSetted = true;

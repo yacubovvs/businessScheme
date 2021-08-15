@@ -439,6 +439,41 @@ function startFunction(){
         this._main_resizing_object_related_objects = undefined;
     }
 
+    ACanvas.getSavingFileString = function(){
+        let save_struct = {
+            scroll: this.scroll,
+            zoom: this.zoom,
+            app_version: ACanvas.app_version,
+            project_name: ACanvas.project_name,
+            objects: ACanvas.objects,
+        }
+        return JSON.stringify(save_struct);
+    }
+
+    ACanvas.loadACanvasFromFile = function(load_object){
+        this.reset_any_actions();
+        this.objects = [];
+
+        //console.log(load_object);
+        this.loadParamater("project_name", load_object.project_name);
+        this.loadParamater("scroll", load_object.scroll);
+        this.loadParamater("zoom", load_object.zoom);
+
+        for(let obj_i in load_object.objects){
+            let object = load_object.objects[obj_i];
+            object_load = new Canvas_object(object);
+            if(object_load!=undefined){
+                this.objects.push(object_load);
+            }
+        }
+
+        this.draw();
+    }
+
+    ACanvas.loadParamater = function(paramater, value){
+        if(value!=undefined) this[paramater] = value;
+    }
+
     // user_selections by user
     ACanvas.user_selections = [];
 

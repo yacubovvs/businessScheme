@@ -37,15 +37,27 @@ function pannel_event_clicked(){
 }
 
 function pannel_save_clicked(){
-    let save_struct = {
-        app_version: ACanvas.app_version,
-        project_name: ACanvas.project_name,
-        objects: ACanvas.objects,
-    }
-    var string = JSON.stringify(save_struct);
+    var string = ACanvas.getSavingFileString();
     var blob = new Blob([string], {type: "text/plain"});
     var link = document.createElement("a");
     link.setAttribute("href", URL.createObjectURL(blob));
     link.setAttribute("download", ACanvas.project_name + ".cbs");
     link.click();
 }
+
+function pannel_load_clicked(){
+    let inputObj = document.createElement("input");
+    inputObj.type = "file";
+
+    inputObj.oninput = function(e){
+        let reader = new FileReader();
+        reader.readAsText(this.files[0]);
+        reader.onload = function() {
+            let loadedObject = JSON.parse(reader.result)
+            ACanvas.loadACanvasFromFile(loadedObject);
+        };
+    }
+    
+    inputObj.click();
+}
+

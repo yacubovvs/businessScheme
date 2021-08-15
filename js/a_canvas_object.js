@@ -1,4 +1,33 @@
 function Canvas_object(object_to_load){
+
+    if(object_to_load!=undefined){
+
+        let object = undefined;
+
+        if(object_to_load.type == "line"){
+            object = new Line();
+        }else if(object_to_load.type == "start"){
+            object = new Start();
+        }else if(object_to_load.type == "finish"){
+            object = new Finish();
+        }else if(object_to_load.type == "event"){
+            object = new Event();
+        }else if(object_to_load.type == "condition"){
+            object = new Condition();
+        }else if(object_to_load.type == "comment"){
+            object = new Comment();
+        }else return undefined;
+
+        for(let features_i in object_to_load){
+            //console.log(features_i);
+            //console.log(object_to_load[features_i]);
+            object[features_i] = object_to_load[features_i];
+        }
+
+        //console.log("**************************")
+        return object;
+    }
+
     let canvas_object = {};
     canvas_object.type = "";
 
