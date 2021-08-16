@@ -234,6 +234,9 @@ function Line(object_to_load){
     object.getSideMenuStruct = function(){
         let draw_struct = [
             new PanelObject_title("Line:"),
+
+            new PanelObject_spacer(10),
+            new PanelObject_btn("Cancel selection", function(obj){common_reset_any_actions(); ACanvas.draw(); panelSide.draw();}),
         ];
         
         return draw_struct;

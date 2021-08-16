@@ -30,11 +30,31 @@ function Event(object_to_load){
 
         //drawCircle(context, x, y, radius, lineWidth, true, true, this.color, this.colorFill);
         roundedRect(context, x-width, y-height, width*2, height*2, radius, lineWidth, true, true, this.color, this.colorFill);
+
+        textSize =  object.fontSize*aCanvas.zoom;
+        context.fillStyle = "rgba(0,0,0,1)";
+        context.font = "" + textSize + "px sans-serif";
+        let fontHeight = getFontHeight(context.font);//*aCanvas.zoom;
+
+        context.textAlign = "start";
+        context.textBaseline = "alphabetic";
+        if(textSize>5) drawWrapText(context, this.text, x - width + 10*aCanvas.zoom, y-height + fontHeight + radius/4, width*2 - 20*aCanvas.zoom, height*2 - fontHeight - 10*aCanvas.zoom - radius/4, fontHeight);
     }
 
     object.getSideMenuStruct = function(){
         let draw_struct = [
             new PanelObject_title("Event:"),
+
+            new PanelObject_spacer(7),
+
+            new PanelObject_label("Font size:"),
+            new PanelObject_input_number(object.fontSize, 18,function(value){object.fontSize = value;}, function(obj){ACanvas.draw();}),
+
+            new PanelObject_label("Text:"),
+            new PanelObject_input_textArea(object.text, function(value){object.text = value;}, function(obj){ACanvas.draw();}),
+
+            new PanelObject_spacer(10),
+            new PanelObject_btn("Cancel selection", function(obj){common_reset_any_actions(); ACanvas.draw(); panelSide.draw();}),
         ];
         
         return draw_struct;

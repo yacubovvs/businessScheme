@@ -142,3 +142,37 @@ function checkLinesCrossing(p1, p2, p3, p4) {
     }
 
 }
+
+function drawWrapText(context, text, marginLeft, marginTop, maxWidth, height, lineHeight){
+    text = text.replace(new RegExp("\n",'g')," \n")
+    let words = text.split(" ");
+    let countWords = words.length;
+    let line = "";
+    let maxHeight = marginTop+height;
+    for (let n = 0; n < countWords; n++) {
+        if(marginTop>=maxHeight) return;
+        
+        let testLine = line + words[n] + " ";
+        let testWidth = context.measureText(testLine).width;
+
+        if (testWidth > maxWidth || words[n][0]=="\n") {
+            context.fillText(line.trim(), marginLeft, marginTop);
+            if(words[n]!=" ")line = words[n] + " ";
+            marginTop += lineHeight;
+        }
+        else {
+            line = testLine;
+        }
+    }
+    context.fillText(line.trim(), marginLeft, marginTop);
+}
+
+function getFontHeight(font) {
+    var parent = document.createElement("span");
+    parent.appendChild(document.createTextNode("height"));
+    document.body.appendChild(parent);
+    parent.style.cssText = "font: " + font + "; white-space: nowrap; display: inline;";
+    var height = parent.offsetHeight;
+    document.body.removeChild(parent);
+    return height;
+}

@@ -32,6 +32,9 @@ function Canvas_object(object_to_load){
     canvas_object.type = "";
     canvas_object.label = "";
 
+    canvas_object.text = ""
+    canvas_object.fontSize = 18
+
     canvas_object.position = {x:0,y:0};
     canvas_object.size = {height:1, width:1}
     canvas_object.rotation = 0;

@@ -47,10 +47,21 @@ function Condition(object_to_load){
         let textSize = Math.min(width, height)/7;
         if(textSize>20) textSize = 20;
 
-        context.font = "" + textSize + "px Tahoma";
+        context.font = "" + textSize + "px sans-serif";
         context.fillStyle = "rgba(0,0,0,1)"; 
-        context.fillText("true", x - textSize*0.8, y - height + textSize*2);
-        context.fillText("false", x - textSize*1, y + height - textSize*2);
+        if(textSize>=5){
+            context.textAlign = "start";
+            context.textBaseline = "alphabetic";
+            context.fillText("true", x - textSize*0.8, y - height + textSize*2);
+            context.fillText("false", x - textSize*1, y + height - textSize*2);
+        }
+
+        textSize =  this.fontSize*aCanvas.zoom;
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+        context.fillStyle = "rgba(0,0,0,1)";
+        context.font = "" + textSize + "px sans-serif";
+        if(textSize>=5) context.fillText(this.text, x, y);
     }
 
     object._is_click_on_object = function(aCanvas, x_ac, y_ac){ 
@@ -97,6 +108,16 @@ function Condition(object_to_load){
     object.getSideMenuStruct = function(){
         let draw_struct = [
             new PanelObject_title("Condition:"),
+            new PanelObject_spacer(7),
+
+            new PanelObject_label("Font size:"),
+            new PanelObject_input_number(object.fontSize, 18,function(value){object.fontSize = value;}, function(obj){ACanvas.draw();}),
+
+            new PanelObject_label("Text:"),
+            new PanelObject_input_textArea(object.text, function(value){object.text = value;}, function(obj){ACanvas.draw();}),
+
+            new PanelObject_spacer(10),
+            new PanelObject_btn("Cancel selection", function(obj){common_reset_any_actions(); ACanvas.draw(); panelSide.draw();}),
         ];
         
         return draw_struct;

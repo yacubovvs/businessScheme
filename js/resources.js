@@ -15,8 +15,10 @@ var Resources = {
     }
 };
 
-function Resource(){
+function Resource(object_to_load){
     let resource = {}
+    
+    if(object_to_load){};
 
     resource.name   = "";
     resource.color  = "rgba(255,255,255,1)";
@@ -25,7 +27,9 @@ function Resource(){
     return resource;
 }
 
+/* * /
 Resources.add();
 Resources.add();
 Resources.add();
 Resources.add();
+/* */

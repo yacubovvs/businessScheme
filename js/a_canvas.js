@@ -306,12 +306,13 @@ function startFunction_ACanvas(){
 
                         if(this.user_selections.length==1){
                             panelSide.property_object = this.user_selections[0];
-                            console.log("Side property for object " + this.user_selections[0])
+                            //console.log("Side property for object " + this.user_selections[0])
                         }else{
                             panelSide.property_object = {
                                 getSideMenuStruct: function(){
                                     return [
                                         new PanelObject_title("Group of objects:"),
+                                        new PanelObject_btn("Cancel selection", function(obj){common_reset_any_actions(); ACanvas.draw(); panelSide.draw();}),
                                     ];
                                 }
                             }
@@ -455,6 +456,8 @@ function startFunction_ACanvas(){
         let save_struct = {
             scroll: this.scroll,
             zoom: this.zoom,
+            resources: Resources.list,
+            paramaters: Parameters.list,
             app_version: ACanvas.app_version,
             project_name: ACanvas.project_name,
             objects: ACanvas.objects,
@@ -479,6 +482,30 @@ function startFunction_ACanvas(){
             }
         }
 
+        Resources.list = [];
+        for(let obj_i in load_object.resources){
+            let object = load_object.resources[obj_i];
+            object_load = new Resource(object);
+            if(object_load!=undefined){
+                for(let features_i in object){
+                    object_load[features_i] = object[features_i];
+                }
+                Resources.list.push(object_load);
+            }
+        }
+
+        Parameters.list = [];
+        for(let obj_i in load_object.paramaters){
+            let object = load_object.paramaters[obj_i];
+            object_load = new Parameter(object);
+            if(object_load!=undefined){
+                for(let features_i in object){
+                    object_load[features_i] = object[features_i];
+                }
+                Parameters.list.push(object_load);
+            }
+        }
+
         this.draw();
     }
 
@@ -497,6 +524,14 @@ function startFunction_ACanvas(){
             new PanelObject_label("Resources:"),
             new PanelObject_btn("+ add resource", function(obj){Resources.add(); panelSide.draw();}),
             new PanelObject_resources_list(),
+
+            new PanelObject_spacer(7),
+            new PanelObject_label("Parameters:"),
+            new PanelObject_btn("+ add parameter", function(obj){Parameters.add(); panelSide.draw();}),
+            new PanelObject_parameters_list(),
+
+            new PanelObject_spacer(7),
+            new PanelObject_label("App version: " + this.app_version),
         ];
     }
 

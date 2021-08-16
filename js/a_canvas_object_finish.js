@@ -33,11 +33,28 @@ function Finish(object_to_load){
         let radius = Math.min(width, height)
 
         drawCircle(context, x, y, radius, lineWidth, true, true, this.color, this.colorFill);
+
+        let textSize =  object.fontSize*aCanvas.zoom;
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+        context.fillStyle = this.color;
+        context.font = "bold " + textSize + "px sans-serif";
+        if(textSize>=5) context.fillText(this.text, x, y);
     }
 
     object.getSideMenuStruct = function(){
         let draw_struct = [
             new PanelObject_title("Finish:"),
+            new PanelObject_spacer(7),
+
+            new PanelObject_label("Font size:"),
+            new PanelObject_input_number(object.fontSize, 18,function(value){object.fontSize = value;}, function(obj){ACanvas.draw();}),
+
+            new PanelObject_label("Text:"),
+            new PanelObject_input_textArea(object.text, function(value){object.text = value;}, function(obj){ACanvas.draw();}),
+
+            new PanelObject_spacer(10),
+            new PanelObject_btn("Cancel selection", function(obj){common_reset_any_actions(); ACanvas.draw(); panelSide.draw();}),
         ];
         
         return draw_struct;
