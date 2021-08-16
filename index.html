@@ -6,6 +6,8 @@
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" type="text/css" href="css/a_canvas.css">
         <link rel="stylesheet" type="text/css" href="css/panels.css">
+        <link rel="stylesheet" type="text/css" href="css/panel_side_elements.css">
+        
         <script src="/js/common.js"></script>
         <script src="/js/a_canvas.js"></script>
         <script src="/js/a_canvas_object.js"></script>
@@ -17,24 +19,28 @@
         <script src="/js/a_canvas_object_event.js"></script>
         <script src="/js/keyboard.js"></script>
         <script src="/js/panels.js"></script>
+        <script src="/js/panel_side.js"></script>
+        <script src="/js/panel_side_struct_object.js"></script>
+        <script src="/js/resources.js"></script>
     </head>
     <body>
         <canvas id="mainACanvas"></canvas>
+
         <div class="fixed-pannel">
+            <div class="pannel-btn" onclick="panelSide.toogleVisible();"> <!-- pannel-btn-active class for active btn-->
+                <img class="pannel-btn-icon" src="images/icons/properties.png">
+                <div class="pannel-btn-title">
+                    Settings
+                </div>
+            </div>
+            <div class="pannel-btn-separator">
+            </div>
             <div class="pannel-btn" onclick="pannel_line_clicked();"> <!-- pannel-btn-active class for active btn-->
                 <img class="pannel-btn-icon" src="images/icons/line.png">
                 <div class="pannel-btn-title">
                     Line
                 </div>
             </div>
-            <!--
-            <div class="pannel-btn" onclick=""> 
-                <img class="pannel-btn-icon" src="images/icons/connection.png">
-                <div class="pannel-btn-title">
-                    Connection
-                </div>
-            </div>
-            -->
             <div class="pannel-btn" onclick="pannel_event_clicked();"> <!-- pannel-btn-active class for active btn-->
                 <img class="pannel-btn-icon" src="images/icons/event.png">
                 <div class="pannel-btn-title">
@@ -92,6 +98,13 @@
                 <div class="pannel-btn-title">
                     Load
                 </div>
+            </div>
+        </div>
+
+        <div id="main_side_panel" style="display: none" class="side_settings_menu">
+            <div id="main_side_panel-body" class="side_settings_menu-body">
+            </div>
+            <div id="main_side_panel-slide" class="side_settings_menu-scroll">
             </div>
         </div>
     </body>

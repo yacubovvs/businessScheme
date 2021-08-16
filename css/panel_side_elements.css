@@ -1,0 +1,65 @@
+.panel_side_element{
+    margin: 5px;
+    color: rgb(240, 240, 240);
+    font-family: sans-serif;
+    font-size: 90%;
+}
+
+.panel_side_element_label{
+
+}
+
+.panel_side_element_title{
+    font-weight: bold;
+}
+
+.panel_side_element_input{
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 4px;
+    color: rgb(37, 37, 37);
+    padding: 5px;
+}
+
+.panel_side_element_btn{
+    text-align: center;
+    padding: 7px 0px;
+    background-color: rgb(18, 18, 18);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.panel_side_element_btn:hover{
+    background-color: rgb(36, 36, 36);
+}
+
+.panel_side_element_resource-list{
+    background-color: white;
+    min-height: 170px;
+    max-height: 400px;
+    border-radius: 6px;
+    overflow: auto;
+}
+
+.panel_side_element_resource-list-element{
+    color: black;
+    padding: 5px;
+    /*padding-left: 10px;*/
+    border-bottom: 1px solid black;
+}
+
+.panel_side_element_resource-list-element-del_btn{
+    color: red;
+    font-weight: bold;
+    float: left;
+    padding: 0px 10px;
+    cursor: pointer;
+}
+
+.panel_side_element_resource-list-element-del_btn:hover{
+    color: rgba(255, 0, 0, 0.5);
+}
+
+.panel_side_element_resource-list-element-label{
+    float: left;
+}

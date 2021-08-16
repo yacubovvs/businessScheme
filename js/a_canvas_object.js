@@ -30,6 +30,7 @@ function Canvas_object(object_to_load){
 
     let canvas_object = {};
     canvas_object.type = "";
+    canvas_object.label = "";
 
     canvas_object.position = {x:0,y:0};
     canvas_object.size = {height:1, width:1}
@@ -286,6 +287,11 @@ function Canvas_object(object_to_load){
         }
     }
 
+    canvas_object.getSideMenuStruct = function(){
+        let draw_struct = [];
+        
+        return draw_struct;
+    }
 
     return canvas_object;
 }

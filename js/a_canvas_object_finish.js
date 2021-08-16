@@ -35,5 +35,13 @@ function Finish(object_to_load){
         drawCircle(context, x, y, radius, lineWidth, true, true, this.color, this.colorFill);
     }
 
+    object.getSideMenuStruct = function(){
+        let draw_struct = [
+            new PanelObject_title("Finish:"),
+        ];
+        
+        return draw_struct;
+    }
+
     return object;
 }

@@ -32,5 +32,13 @@ function Event(object_to_load){
         roundedRect(context, x-width, y-height, width*2, height*2, radius, lineWidth, true, true, this.color, this.colorFill);
     }
 
+    object.getSideMenuStruct = function(){
+        let draw_struct = [
+            new PanelObject_title("Event:"),
+        ];
+        
+        return draw_struct;
+    }
+
     return object;
 }

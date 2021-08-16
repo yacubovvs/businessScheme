@@ -94,5 +94,13 @@ function Condition(object_to_load){
         ];
     }
 
+    object.getSideMenuStruct = function(){
+        let draw_struct = [
+            new PanelObject_title("Condition:"),
+        ];
+        
+        return draw_struct;
+    }
+
     return object;
 }

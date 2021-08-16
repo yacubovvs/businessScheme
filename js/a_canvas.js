@@ -2,15 +2,17 @@
 var ACanvas = undefined;
 
 
-function startFunction(){
+function startFunction_ACanvas(){
     // Инициализация
     ACanvas = document.getElementById('mainACanvas');
     ACanvas.initted = false; // Флаг инициализации
     ACanvas.selecting_dot = false;
     ACanvas.app_version = 1;
 
+    ACanvas.user_settings_opened = false;
+
     ACanvas.project_name = "new Project";
-    // Инициализация настроек
+    // Settings initing
     ACanvas._settings = {
         // Задний фон
         _bg_color: "rgb(255,255,255)",
@@ -301,10 +303,27 @@ function startFunction(){
                             }
                             
                         }
+
+                        if(this.user_selections.length==1){
+                            panelSide.property_object = this.user_selections[0];
+                            console.log("Side property for object " + this.user_selections[0])
+                        }else{
+                            panelSide.property_object = {
+                                getSideMenuStruct: function(){
+                                    return [
+                                        new PanelObject_title("Group of objects:"),
+                                    ];
+                                }
+                            }
+                        }
+
                         if(!clickOnObject){
                             //console.log("Nothing selected");
                             this.user_selections = [];
+                            panelSide.property_object = this;
                         }
+
+                        panelSide.draw();
                 }
             }else{
                 this._is_Object_resizing = false;
@@ -429,14 +448,7 @@ function startFunction(){
     }
 
     ACanvas.reset_any_actions = function(){
-        this.userDrawing_object = undefined;
-        this.selecting_dot = false;
-        this._is_Object_resizing = false;
-        this._object_resize_point = -1;
-        this._object_user_moving = false;
-        this.user_selections = [];
-        this._main_resizing_object = undefined;
-        this._main_resizing_object_related_objects = undefined;
+        common_reset_any_actions();
     }
 
     ACanvas.getSavingFileString = function(){
@@ -474,6 +486,20 @@ function startFunction(){
         if(value!=undefined) this[paramater] = value;
     }
 
+    ACanvas.getSideMenuStruct = function(){
+        return [
+            new PanelObject_title("Project settings:"),
+            new PanelObject_spacer(7),
+            new PanelObject_label("Project name:"),
+            new PanelObject_input_text(this.project_name, function(value){ACanvas.project_name=value;}),
+
+            new PanelObject_spacer(7),
+            new PanelObject_label("Resources:"),
+            new PanelObject_btn("+ add resource", function(obj){Resources.add(); panelSide.draw();}),
+            new PanelObject_resources_list(),
+        ];
+    }
+
     // user_selections by user
     ACanvas.user_selections = [];
 
@@ -508,4 +534,4 @@ function aCanvas_drawDots(aCanvas, context){
 }
 
 
-window.addEventListener('load', startFunction);
+window.addEventListener('load', startFunction_ACanvas);

@@ -53,8 +53,10 @@ function pannel_load_clicked(){
         let reader = new FileReader();
         reader.readAsText(this.files[0]);
         reader.onload = function() {
+            common_reset_any_actions();
             let loadedObject = JSON.parse(reader.result)
             ACanvas.loadACanvasFromFile(loadedObject);
+            panelSide.draw();
         };
     }
     

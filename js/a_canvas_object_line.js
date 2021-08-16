@@ -231,5 +231,13 @@ function Line(object_to_load){
         return [];
     }
 
+    object.getSideMenuStruct = function(){
+        let draw_struct = [
+            new PanelObject_title("Line:"),
+        ];
+        
+        return draw_struct;
+    }
+
     return object;
 }

@@ -8,7 +8,7 @@
     /*border-radius: 6px 0 0 6px;*/
     float: left;
     font-family: sans-serif;
-    font-size: 70%;
+    font-size: 80%;
 }
 
 .pannel-btn-active{
@@ -24,6 +24,7 @@
     text-align: center;
     border-radius: 6px;
     /*border-radius: 6px;*/
+    cursor: pointer;
 }
 
 .pannel-btn:hover {
@@ -31,7 +32,7 @@
 }
 
 .pannel-btn-icon{
-    height: 20px;
+    height: 23px;
 }
 
 .pannel-btn-separator{
@@ -41,4 +42,28 @@
     width: 2px;
     height: 42px;
     background-color: rgb(128,128,128);
+}
+
+.side_settings_menu{
+    position: fixed;
+    left: 0px;
+    top: 61px;
+    bottom: 0px;
+}
+
+.side_settings_menu-body{
+    background-color: rgb(70, 70, 70);
+    height: 100%;
+    float: left;
+    padding: 5px 0px;
+}
+
+.side_settings_menu-scroll{
+    background-color: rgb(192, 192, 192);
+    width: 5px;
+    height: 100%;
+    float: left;
+    border-left: 2px solid rgb(80, 80, 80);
+    cursor: col-resize;
+    /*border-right: 4px solid rgba(80, 80, 80, 0);*/
 }

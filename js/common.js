@@ -2,6 +2,19 @@ function common_get_treangle_area(x0, y0, x1, y1, x2, y2){
     return Math.abs((x0 - x2)*(y1 - y2) + (x1-x2)*(y2-y0));
  }
 
+ function common_reset_any_actions(){
+    ACanvas.userDrawing_object = undefined;
+    ACanvas.selecting_dot = false;
+    ACanvas._is_Object_resizing = false;
+    ACanvas._object_resize_point = -1;
+    ACanvas._object_user_moving = false;
+    ACanvas.user_selections = [];
+    ACanvas._main_resizing_object = undefined;
+    ACanvas._main_resizing_object_related_objects = undefined;
+    panelSide.property_object = ACanvas;
+    ACanvas.click();
+ }
+
  function drawCircle_old(context, x, y, radius, color){
     context.beginPath();
     context.lineWidth = 1;

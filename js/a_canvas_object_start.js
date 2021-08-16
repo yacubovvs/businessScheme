@@ -35,5 +35,13 @@ function Start(loaded_object){
         return [];
     }
 
+    object.getSideMenuStruct = function(){
+        let draw_struct = [
+            new PanelObject_title("Start:"),
+        ];
+        
+        return draw_struct;
+    }
+
     return object;
 }

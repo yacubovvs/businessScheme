@@ -40,5 +40,13 @@ function Comment(object_to_load){
         context.lineWidth = 1;
     }
 
+    object.getSideMenuStruct = function(){
+        let draw_struct = [
+            new PanelObject_title("Comment:"),
+        ];
+        
+        return draw_struct;
+    }
+
     return object;
 }
