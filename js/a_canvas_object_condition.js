@@ -5,6 +5,7 @@ function Condition(object_to_load){
     object.size.width = 2;
     object.size.height = 2;
     object.color = "rgba(0,0,0,0.7)";
+    object.condition_text = "true";
 
     object.visible = true;
 
@@ -112,10 +113,16 @@ function Condition(object_to_load){
 
             new PanelObject_label("Font size:"),
             new PanelObject_input_number(object.fontSize, 18,function(value){object.fontSize = value;}, function(obj){ACanvas.draw();}),
+            new PanelObject_spacer(2),
 
             new PanelObject_label("Text:"),
             new PanelObject_input_textArea(object.text, function(value){object.text = value;}, function(obj){ACanvas.draw();}),
+            new PanelObject_spacer(2),
 
+            new PanelObject_label("Condition:"),
+            new PanelObject_input_textArea(object.condition_text, function(value){object.condition_text = value;}, undefined /*function(obj){}*/),
+            new PanelObject_spacer(2),
+            
             new PanelObject_spacer(10),
             new PanelObject_btn("Cancel selection", function(obj){common_reset_any_actions(); ACanvas.draw(); panelSide.draw();}),
         ];

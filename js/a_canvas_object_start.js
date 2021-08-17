@@ -6,9 +6,17 @@ function Start(loaded_object){
     object.size.height = 1;
     object.color = "rgba(0,255,0,1)";
     object.colorFill = "rgba(0,255,0,0.1)";
-    object.textSize = 32;
-
+    object.fontSize = 32;
     object.visible = true;
+
+    let onum = 1;
+    for(obj_i in ACanvas.objects){
+        let obj = ACanvas.objects[obj_i];
+        if(obj.type=="start"){
+            onum++;
+        }
+    }
+    object.text = "" + onum;
 
     object.draw = function(aCanvas, context){
         if(!this.visible) return;

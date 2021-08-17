@@ -296,5 +296,170 @@ function Canvas_object(object_to_load){
         return draw_struct;
     }
 
+    // For test:
+    // ACanvas.objects[2].get_related_objects();
+    canvas_object.get_related_objects = function(aCanvas){
+        let related_objects = {
+            input: [],
+            output: [],
+            output_false: [], // only for conditions
+            errors: [],
+        }
+
+        // Step 1: get related lines on input
+
+        let input_points = this.get_coordinates_of_input_points();
+        // geting input points
+        for(let point_i in input_points){
+            let point = input_points[point_i];
+            // searching for input lines
+            let lines_for_input_found = false;
+            for(let obj_i in aCanvas.objects){
+                let obj = aCanvas.objects[obj_i];
+                if(obj.type=="line"){
+                    let line_coordinates_points = obj.get_points_coordinates();
+                    if (
+                        point.x == line_coordinates_points.x1 && point.y == line_coordinates_points.y1
+                        || point.x == line_coordinates_points.x2 && point.y == line_coordinates_points.y2
+                    ){
+                        lines_for_input_found = true;
+                        //let related_objects_array_input_to_input = [];
+                        let related_objects_array_input_to_output = [];
+                        let related_lines_points = obj.get_related_lines_points(aCanvas);
+                        for(let related_point_i in related_lines_points){
+                            let related_point = related_lines_points[related_point_i];
+                            for(let related_object_i in aCanvas.objects){
+                                let related_object = aCanvas.objects[related_object_i];
+                                if(related_object.type!="line"){
+                                    let related_object_input_points = related_object.get_coordinates_of_input_points();
+                                    let related_object_output_points = related_object.get_coordinates_of_output_points();
+                                    
+                                    for(let related_object_input_point_i in related_object_input_points){
+                                        let related_object_input_point = related_object_input_points[related_object_input_point_i];
+                                        if(
+                                            related_object_input_point.x == related_point.x && 
+                                            related_object_input_point.y == related_point.y
+                                        ){
+                                            if(related_object!=this && related_objects_array_input_to_input.indexOf(related_object)==-1){
+                                                //related_objects_array_input_to_input.push(related_object);
+                                                related_objects.errors.push(new Error_pointObject_to_pointObject(object, point, related_object, related_object_input_point, "Forbidden to connect input with input. Only one input and many output."));
+                                            }
+                                        }
+                                    }
+
+                                    for(let related_object_output_point_i in related_object_output_points){
+                                        let related_object_output_point = related_object_output_points[related_object_output_point_i];
+                                        if(
+                                            related_object_output_point.x == related_point.x && 
+                                            related_object_output_point.y == related_point.y
+                                        ){
+                                            if(related_object!=this && related_objects_array_input_to_output.indexOf(related_object)==-1){
+                                                related_objects_array_input_to_output.push(related_object);
+                                                related_objects.input.push(related_object);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if(related_objects_array_input_to_output.length==0){
+                            related_objects.errors.push(new Error_pointObject(canvas_object, point, "No routes was found to object input"));
+                        }
+                    }
+                }
+            }
+            
+            if(input_points.length!=0 && !lines_for_input_found){
+                related_objects.errors.push(new Error_pointObject(canvas_object, point, "No routes was found to input point"));
+            }
+            
+        }
+
+        let output_points = this.get_coordinates_of_output_points();
+        // geting input points
+        for(let point_i in output_points){
+            let point = output_points[point_i];
+            // searching for input lines
+            let lines_for_output_found = false;
+            for(let obj_i in aCanvas.objects){
+                let obj = aCanvas.objects[obj_i];
+                if(obj.type=="line"){
+                    let line_coordinates_points = obj.get_points_coordinates();
+                    if (
+                        point.x == line_coordinates_points.x1 && point.y == line_coordinates_points.y1
+                        || point.x == line_coordinates_points.x2 && point.y == line_coordinates_points.y2
+                    ){
+                        lines_for_output_found = true;
+                        let related_objects_array_input_to_input = [];
+                        let related_objects_array_input_to_output = [];
+                        let related_lines_points = obj.get_related_lines_points(aCanvas);
+                        for(let related_point_i in related_lines_points){
+                            let related_point = related_lines_points[related_point_i];
+                            for(let related_object_i in aCanvas.objects){
+                                let related_object = aCanvas.objects[related_object_i];
+                                if(related_object.type!="line"){
+                                    let related_object_input_points = related_object.get_coordinates_of_input_points();
+                                    let related_object_output_points = related_object.get_coordinates_of_output_points();
+                                    
+                                    for(let related_object_input_point_i in related_object_input_points){
+                                        let related_object_input_point = related_object_input_points[related_object_input_point_i];
+                                        if(
+                                            related_object_input_point.x == related_point.x && 
+                                            related_object_input_point.y == related_point.y
+                                        ){
+                                            if(related_object!=this && related_objects_array_input_to_input.indexOf(related_object)==-1){
+                                                related_objects_array_input_to_input.push(related_object);
+                                                if(this.type=="condition"){
+                                                    if(point_i==0){
+                                                        related_objects.output_false.push(related_object);
+                                                    }else{
+                                                        related_objects.output.push(related_object);
+                                                    }
+                                                }else{
+                                                    // For other objects
+                                                    related_objects.output.push(related_object);
+                                                }
+                                                
+                                                //Error_pointObject_to_pointObject(object, point, related_object, related_object_input_point, "Forbidden to connect input with input. Only one input and many output.");
+                                            }
+                                        }
+                                    }
+
+                                    /*
+                                    for(let related_object_output_point_i in related_object_output_points){
+                                        let related_object_output_point = related_object_output_points[related_object_output_point_i];
+                                        if(
+                                            related_object_output_point.x == related_point.x && 
+                                            related_object_output_point.y == related_point.y
+                                        ){
+                                            if(related_object!=this && related_objects_array_input_to_output.indexOf(related_object)==-1){
+                                                related_objects_array_input_to_output.push(related_object);
+                                                //related_objects.output.push(related_object);
+                                                // Voided but not interesting for process
+                                            }
+                                        }
+                                    }
+                                    */
+                                }
+                            }
+                        }
+                        if(related_objects_array_input_to_input.length==0){
+                            related_objects.errors.push(new Error_pointObject(canvas_object, point, "No routes was found from object output"));
+                        }   
+                    }
+                    
+                }
+                
+            }
+            if(output_points.length!=0 && !lines_for_output_found){
+                related_objects.errors.push(new Error_pointObject(canvas_object, point, "No routes was found for output point"));
+            }
+
+        }
+
+        return related_objects;
+
+    }
+
     return canvas_object;
 }

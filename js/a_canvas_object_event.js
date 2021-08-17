@@ -6,8 +6,8 @@ function Event(object_to_load){
     object.size.height = 2;
     object.color = "rgba(0,0,0,1)";
     object.colorFill = "rgba(0,0,0,0.1)";
-
     object.visible = true;
+    object.resource_changing = {};
 
     object.draw = function(aCanvas, context){
         if(!this.visible) return;
@@ -53,11 +53,36 @@ function Event(object_to_load){
             new PanelObject_label("Text:"),
             new PanelObject_input_textArea(object.text, function(value){object.text = value;}, function(obj){ACanvas.draw();}),
 
-            new PanelObject_spacer(10),
-            new PanelObject_btn("Cancel selection", function(obj){common_reset_any_actions(); ACanvas.draw(); panelSide.draw();}),
-        ];
+            new PanelObject_spacer(7),
+            new PanelObject_label("Resources changing:"),
+        ]
+
+        if(Resources.list.length==0){
+            draw_struct.push(new PanelObject_label("-no resources found"));
+        }else{
+            for(resource_i in Resources.list){
+                let resource = Resources.list[resource_i];
+                draw_struct.push(new PanelObject_label(resource.name + ":"));
+                draw_struct.push(new PanelObject_input_text(object.get_resource_change_value(resource), function(value){object.set_resource_change_value(resource, value)}, undefined /*function(obj){}*/));
+                draw_struct.push(new PanelObject_spacer(2))
+            }
+        }
+
+        draw_struct.push(new PanelObject_spacer(10));
+        draw_struct.push(new PanelObject_btn("Cancel selection", function(obj){common_reset_any_actions(); ACanvas.draw(); panelSide.draw();}));
         
         return draw_struct;
+    }
+
+    object.set_resource_change_value = function(resource, value){
+        //console.log(resource);
+        //console.log(value);
+        //console.log("---");
+        this.resource_changing[resource.id] = value;
+    }
+
+    object.get_resource_change_value = function(resource){
+        return this.resource_changing[resource.id];
     }
 
     return object;

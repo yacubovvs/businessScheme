@@ -570,3 +570,4 @@ function aCanvas_drawDots(aCanvas, context){
 
 
 window.addEventListener('load', startFunction_ACanvas);
+window.addEventListener('resize', function(){if(ACanvas!=undefined) if(ACanvas.initted) ACanvas.draw();});

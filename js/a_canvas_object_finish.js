@@ -6,8 +6,17 @@ function Finish(object_to_load){
     object.size.height = 1;
     object.color = "rgba(255,0,0,1)";
     object.colorFill = "rgba(255,0,0,0.1)";
-
+    object.fontSize = 32;
     object.visible = true;
+
+    let onum = 1;
+    for(obj_i in ACanvas.objects){
+        let obj = ACanvas.objects[obj_i];
+        if(obj.type=="finish"){
+            onum++;
+        }
+    }
+    object.text = "" + onum;
 
     object.get_coordinates_of_output_points = function(){
         return [];

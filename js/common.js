@@ -176,3 +176,7 @@ function getFontHeight(font) {
     document.body.removeChild(parent);
     return height;
 }
+
+function Point(x,y){
+    return {x:x, y:y};
+}

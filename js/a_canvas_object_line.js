@@ -189,6 +189,24 @@ function Line(object_to_load){
         };
     }
 
+    object.get_related_lines_points = function(aCanvas){
+        let related_lines = this.get_related_lines(aCanvas);
+        let points = [];
+
+        let thisCoordinates = this.get_points_coordinates();
+        points.push(new Point(thisCoordinates.x1, thisCoordinates.y1));
+        points.push(new Point(thisCoordinates.x2, thisCoordinates.y2));
+
+        for(let obj_i in related_lines){
+            let obj = related_lines[obj_i];
+            let obj_coordinates = obj.get_points_coordinates();
+            points.push(new Point(obj_coordinates.x1, obj_coordinates.y1));
+            points.push(new Point(obj_coordinates.x2, obj_coordinates.y2));
+        }
+
+        return points;
+    }
+
     object.get_related_lines = function(aCanvas, related_lines){
         let coordinates = this.get_points_coordinates()
         
