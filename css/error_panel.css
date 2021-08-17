@@ -1,0 +1,38 @@
+.main_bottom_panel-body_error-error{
+    margin: 5px;
+    padding: 10px 10px;
+    border-radius: 10px;
+    color: rgb(146, 0, 0);
+    border: 2px solid rgb(146, 0, 0);
+    background-color: white;
+    font-size: 95%;
+}
+
+.main_bottom_panel-body_error-no_error{
+    color: rgb(136, 136, 0);
+    border: 2px solid rgb(167, 167, 0);
+    text-align: center;
+}
+
+.bottom_pannel_inError-btn{
+    margin: 4px 0px 6px 0px;
+    text-align: center;
+    padding: 4px 0px;
+    background-color: rgb(18, 18, 18);
+    border-radius: 6px;
+    cursor: pointer;
+    color: rgb(180, 180, 180);
+    font-size: 90%;
+    width: 200px;
+}
+
+.bottom_pannel_inError-btn:hover{
+    opacity: 0.8;
+}
+
+#bottom_panel_top_btn_holder_free{
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    float: right;
+}

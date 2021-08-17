@@ -16,6 +16,8 @@ function startFunction_panelSide(){
         this._isVisible = visible;
         if(visible) this.style.display = "block";
         else this.style.display = "none";
+
+        reizePanels();
     }
 
 
@@ -30,6 +32,7 @@ function startFunction_panelSide(){
         if(this.width<this._settings._min_width) this.width = this._settings._min_width;
         if(this.width>this._settings._max_width) this.width = this._settings._max_width;
         this.style.width = "" + this.width + "px";
+        reizePanels();
     }
 
     panelSide.content.changeWidth = function(size){
@@ -40,7 +43,7 @@ function startFunction_panelSide(){
     panelSide.slide.is_mouse_on = false;
     panelSide.drag_position = {x:0, y:0};
 
-    window_onmouseup = function(event){
+    let window_onmouseup = function(event){
         panelSide.slide.is_mouse_on = false;
     }
 
@@ -50,7 +53,7 @@ function startFunction_panelSide(){
         panelSide.drag_position.y = event.y;
     }
 
-    window_onmousemove = function(event){
+    let window_onmousemove = function(event){
         if(panelSide.slide.is_mouse_on){
             panelSide.content.changeWidth(event.x - panelSide.drag_position.x);
 
@@ -75,7 +78,7 @@ function startFunction_panelSide(){
     }
 
     panelSide.draw();
-    panelSide.setVisible(true);
+    //panelSide.setVisible(true);
 }
 
 window.addEventListener('load', startFunction_panelSide);

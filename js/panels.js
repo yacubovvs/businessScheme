@@ -63,3 +63,7 @@ function pannel_load_clicked(){
     inputObj.click();
 }
 
+function reizePanels(){
+    if(panelSide._isVisible) panelBottom.setWidth(window.innerWidth - panelSide.content.width - 7);
+    else panelBottom.setWidth(window.innerWidth);
+}

@@ -323,7 +323,7 @@ function Canvas_object(object_to_load){
                         || point.x == line_coordinates_points.x2 && point.y == line_coordinates_points.y2
                     ){
                         lines_for_input_found = true;
-                        //let related_objects_array_input_to_input = [];
+                        let related_objects_array_input_to_input = [];
                         let related_objects_array_input_to_output = [];
                         let related_lines_points = obj.get_related_lines_points(aCanvas);
                         for(let related_point_i in related_lines_points){
@@ -342,7 +342,7 @@ function Canvas_object(object_to_load){
                                         ){
                                             if(related_object!=this && related_objects_array_input_to_input.indexOf(related_object)==-1){
                                                 //related_objects_array_input_to_input.push(related_object);
-                                                related_objects.errors.push(new Error_pointObject_to_pointObject(object, point, related_object, related_object_input_point, "Forbidden to connect input with input. Only one input and many output."));
+                                                related_objects.errors.push(new Error_pointObject_to_pointObject(canvas_object, point, related_object, related_object_input_point, "Forbidden to connect input with input. Only one input and many output."));
                                             }
                                         }
                                     }
@@ -462,4 +462,14 @@ function Canvas_object(object_to_load){
     }
 
     return canvas_object;
+}
+
+function get_object_type_string(obj){
+    if(obj.type=="line") return "Line";
+    else if(obj.type=="comment") return "Comment";
+    else if(obj.type=="condition") return "Condition";
+    else if(obj.type=="event") return "Event";
+    else if(obj.type=="start") return "Start";
+    else if(obj.type=="finish") return "Finish";
+    else return obj.type;
 }

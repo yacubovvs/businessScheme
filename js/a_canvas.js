@@ -538,6 +538,16 @@ function startFunction_ACanvas(){
     // user_selections by user
     ACanvas.user_selections = [];
 
+    ACanvas.scroll_to_object = function(obj){
+        console.log("Scrolling to object");
+        console.log(obj);
+    }
+
+    ACanvas.scroll_to_point = function(point){
+        console.log("Scrolling to point");
+        console.log(point);
+    }
+
     ACanvas.draw();
     ACanvas.initted = true;
 }
@@ -570,4 +580,7 @@ function aCanvas_drawDots(aCanvas, context){
 
 
 window.addEventListener('load', startFunction_ACanvas);
-window.addEventListener('resize', function(){if(ACanvas!=undefined) if(ACanvas.initted) ACanvas.draw();});
+window.addEventListener('resize', function(){
+    if(ACanvas!=undefined) if(ACanvas.initted) ACanvas.draw();
+    reizePanels();
+});
