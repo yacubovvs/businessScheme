@@ -65,7 +65,7 @@
     width: 5px;
     height: 100%;
     float: left;
-    border-left: 2px solid rgb(80, 80, 80);
+    border-left: 2px solid rgb(40, 40, 40);
     cursor: col-resize;
     /*border-right: 4px solid rgba(80, 80, 80, 0);*/
 }

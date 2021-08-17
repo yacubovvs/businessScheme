@@ -1,0 +1,49 @@
+
+.bottom_panel{
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 600px;
+    height: 200px;
+    background-color: rgb(70, 70, 70);;
+}
+
+.bottom_panel_top_btn_holder{
+
+}
+
+.bottom_panel_top_btn{
+    /*width: 50px;*/
+    height: 20px;
+    background-color: rgb(240, 240, 240);
+    color: rgb(46, 46, 46);
+    /*border-radius: 4px;*/
+    padding: 5px 10px;
+    margin: 5px;
+    border: 1px solid rgb(112, 112, 112);
+    float: right;
+}
+
+.bottom_panel_top_btn:hover{
+    background-color: rgb(179, 179, 179);
+}
+
+.vertical_slider{
+    background-color: rgb(192, 192, 192);
+    height: 5px;
+    width: 100%;
+    border-bottom: 2px solid rgb(40, 40, 40);
+    cursor:row-resize;
+}
+
+.bottom_panel-btn_close{
+    font-size: 100;
+    padding: 5px 10px;
+    float: left;
+    color:rgb(179, 179, 179);
+    cursor: pointer;
+}
+
+.bottom_panel-btn_close:hover{
+    color:rgb(219, 219, 219);
+}

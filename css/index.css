@@ -3,6 +3,7 @@ body{
     padding: 0;
     overflow: none;
     user-select: none;
+    font-family: sans-serif;
 }
 
 .clear_both{
