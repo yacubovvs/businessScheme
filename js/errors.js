@@ -2,7 +2,7 @@ function Error(errorText){
     let error = {};
     error.errorText = errorText;
     error.content = document.createElement("div");
-    error.content.classList.add("main_bottom_panel-body_error-error");
+    error.content.classList.add("main_bottom_panel-body-error");
     _errors_add_text_div(error.content, errorText);
     return error;
 }
@@ -37,9 +37,15 @@ function Error_pointObject_to_pointObject(object, point, object2, point2, errorT
     return error;
 }
 
+function InProgress(){
+    let error = new Error("In progress...");
+    error.content.classList.add("main_bottom_panel-body-error_error-no_error");
+    return error;
+}
+
 function NoErrors(){
     let error = new Error("No error");
-    error.content.classList.add("main_bottom_panel-body_error-no_error");
+    error.content.classList.add("main_bottom_panel-body-error_error-no_error");
     return error;
 }
 

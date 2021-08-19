@@ -3,7 +3,8 @@ var panelBottom;
 function startFunction_panelBottom(){
     panelBottom                 = document.getElementById('main_bottom_panel');
     panelBottom.slide           = document.getElementById('bottom_panel_vertical_slider');
-    panelBottom.content         = document.getElementById('main_bottom_panel-body');
+    panelBottom.content_error   = document.getElementById('main_bottom_panel-body-error');
+    panelBottom.content_result  = document.getElementById('main_bottom_panel-body-result');
     panelBottom.on_hide_btns    = document.getElementById('bottom_panel_top_btn_holder_free');
     
     panelBottom._isVisible = false;
@@ -78,14 +79,23 @@ function startFunction_panelBottom(){
     window.addEventListener('mousemove', window_onmousemove);
     window.addEventListener('mouseup', window_onmouseup);
 
-    panelBottom.draw = function(){
-
-    }
-
-    panelBottom.draw();
     panelBottom.setVisible(true);
 
-    panelBottom.content.setErrors = function(errorList, doNotSetVisible){
+    panelBottom.content_result.setResultInProgress = function(){
+        this.innerHTML = "";
+        resultList = [];
+        resultList.push(new InProgress());
+        this.setResult(resultList);
+    }
+
+    panelBottom.content_error.setErrorsInProgress = function(){
+        this.innerHTML = "";
+        errorList = [];
+        errorList.push(new InProgress());
+        this.setErrors(errorList);
+    }
+
+    panelBottom.content_error.setErrors = function(errorList, doNotSetVisible){
         this.innerHTML = "";
         if(!errorList) errorList = [];
         if(errorList.length==0){
@@ -99,9 +109,39 @@ function startFunction_panelBottom(){
         }
 
         if(doNotSetVisible!=true) panelBottom.setVisible(true);
+    
     }
 
-    panelBottom.content.setErrors(undefined, true);
+    panelBottom.content_result.setResult = function(resultList, doNotSetVisible){
+        this.innerHTML = "";
+        if(!resultList) resultList = [];
+        if(resultList.length==0){
+            resultList.push(new ResultNoResult())
+        }
+
+        for(resultList_i in resultList){
+            result = resultList[resultList_i];
+
+            this.appendChild(result.content);
+        }
+
+        if(doNotSetVisible!=true) panelBottom.setVisible(true);
+    
+    }
+
+    panelBottom.content_error.showErrorPart = function(){
+        panelBottom.content_error.style.display = "block";
+        panelBottom.content_result.style.display = "none"
+    }
+
+    panelBottom.content_error.showResultPart = function(){
+        panelBottom.content_result.style.display = "block";
+        panelBottom.content_error.style.display = "none";
+    }
+
+    panelBottom.content_error.setErrors(undefined, true);
+    panelBottom.content_result.setResult(undefined, true);
+
     panelBottom.setVisible(false);
 
     panelBottom.onCloseBtnClick = function(){
@@ -110,10 +150,12 @@ function startFunction_panelBottom(){
 
     panelBottom.onErrorBtnClick = function(){
         panelBottom.setVisible(true);
+        this.content_error.showErrorPart();
     }
 
     panelBottom.onResultBtnClick = function(){
         panelBottom.setVisible(true);
+        this.content_error.showResultPart();
     }
 
     

@@ -1,0 +1,16 @@
+.main_bottom_panel-body-result{
+    margin: 5px;
+    padding: 10px 10px;
+    border-radius: 10px;
+    color: rgb(0, 146, 12);
+    border: 2px solid rgb(0, 146, 12);
+    background-color: white;
+    font-size: 95%;
+}
+
+.main_bottom_panel-body-error_content{
+    background-color: rgb(230, 230, 230);
+    height: calc(100% - 50px);
+    width: calc(100%);
+    overflow: auto;
+}

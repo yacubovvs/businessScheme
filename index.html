@@ -28,6 +28,7 @@
         <script src="/js/resources.js"></script>
         <script src="/js/parameters.js"></script>
         <script src="/js/errors.js"></script>
+        <script src="/js/result.js"></script>
         <script src="/js/check_and_execute.js"></script>
     </head>
     <body>
@@ -86,7 +87,7 @@
                     Check
                 </div>
             </div>
-            <div class="pannel-btn" onclick="">
+            <div class="pannel-btn" onclick="run_project();">
                 <img class="pannel-btn-icon" src="images/icons/run.png">
                 <div class="pannel-btn-title">
                     Run
@@ -138,8 +139,8 @@
                 </div>
             </div>
 
-            <div class="main_bottom_panel-body" id="main_bottom_panel-body">
-            </div>
+            <div class="main_bottom_panel-body-error_content" id="main_bottom_panel-body-error">Errors</div>
+            <div class="main_bottom_panel-body-result_content" id="main_bottom_panel-body-result">Result</div> 
         </div>
     </body>
 </html>

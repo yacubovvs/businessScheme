@@ -48,7 +48,14 @@
     color:rgb(219, 219, 219);
 }
 
-.main_bottom_panel-body{
+.main_bottom_panel-body-error_content{
+    background-color: rgb(230, 230, 230);
+    height: calc(100% - 50px);
+    width: calc(100%);
+    overflow: auto;
+}
+
+.main_bottom_panel-body-result_content{
     background-color: rgb(230, 230, 230);
     height: calc(100% - 50px);
     width: calc(100%);

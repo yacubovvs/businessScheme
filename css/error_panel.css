@@ -1,4 +1,4 @@
-.main_bottom_panel-body_error-error{
+.main_bottom_panel-body-error{
     margin: 5px;
     padding: 10px 10px;
     border-radius: 10px;
@@ -8,7 +8,7 @@
     font-size: 95%;
 }
 
-.main_bottom_panel-body_error-no_error{
+.main_bottom_panel-body-error_error-no_error{
     color: rgb(136, 136, 0);
     border: 2px solid rgb(167, 167, 0);
     text-align: center;
