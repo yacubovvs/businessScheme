@@ -135,12 +135,18 @@ function execute_event(event_obj){
         let exp_operation = ch_exp[0];
         let exp_value = ch_exp.substr(1);
 
+        let resname = Resources.getResourceById(res_ch).name;
+
         //console.log(ch_exp);
         let res = resources_values_run;
         let param = getParametersValueArray();
 
-        if(exp_operation=="="){
+        let exp_value_eval = eval(exp_value);
 
+        //console.log(exp_value_eval);
+        if(exp_operation=="="){
+            resources_values_run[resname] = exp_value_eval;
+            
         }
 
     }
