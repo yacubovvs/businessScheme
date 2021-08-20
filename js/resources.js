@@ -12,6 +12,18 @@ var Resources = {
         if(position!=-1){
             this.list.splice(position, 1);
         }
+    },
+    getResourceById: function(res_id){
+        for(res_i in this.list){
+            let res = this.list[res_i];
+            if(res.id==res_id) return res;
+        }
+    },
+    getResourceByName: function(res_name){
+        for(res_i in this.list){
+            let res = this.list[res_i];
+            if(res.name==res_name) return res;
+        }
     }
 };
 

@@ -299,6 +299,8 @@ function Canvas_object(object_to_load){
     // For test:
     // ACanvas.objects[2].get_related_objects();
     canvas_object.get_related_objects = function(aCanvas){
+        if(!aCanvas) aCanvas = ACanvas;
+        
         let related_objects = {
             object: this,
             input: [],

@@ -1,6 +1,9 @@
-var related_objects_run = []
+var related_objects_run = [];
+var resources_values_run = {};
+var param_values_run = {};
 
 function check_project(){
+    related_objects_run = [];
     panelBottom.content_error.showErrorPart();
     panelBottom.content_error.setErrorsInProgress();
 
@@ -30,7 +33,8 @@ function check_project(){
 }
 
 function run_project(){
-    check_project();
+    let has_errors = check_project();
+    if(has_errors) return;
     
     panelBottom.content_result.setResultInProgress();
     panelBottom.content_error.showResultPart();
@@ -39,20 +43,125 @@ function run_project(){
 
     run_from_start(resultStruct);
 
-
-
     panelBottom.content_result.setResult(resultStruct);
 }
 
 function run_from_start(resultStruct){
 
-    // Step 1 find start
+    // Step 1: find start
     for(let obj_start_i in related_objects_run){
         let obj_start = related_objects_run[obj_start_i];
         //console.log(obj_start);
         if(obj_start.object.type=="start"){
-            console.log("Found start");
-            console.log(obj_start);
+            //console.log("Found start");
+            //console.log(obj_start);
+
+            // Step 2: starting emulation
+            // clearing resources
+            resources_values_run = getResourcesValueArray();
+            param_values_run = getParametersValueArray();
+
+            let wdt = 0;
+            let next_struct = execute_object(obj_start).get_related_objects();
+            while(next_struct){
+
+                //console.log(next_object);
+                next_object = execute_object(next_struct);
+                if(next_object!=undefined){
+
+                    if(next_object.type=="finish"){
+                        execute_object(next_object.get_related_objects());
+                        
+                        let res_result = ResultResourcesTable("Resources on finish " + next_object.text, resources_values_run);
+                        resultStruct.push(res_result);
+                        
+                        // FINISHING
+                        break;
+                    }
+
+                    next_struct = next_object.get_related_objects();
+                }
+                
+                wdt ++;
+                if (wdt>100){
+                    console.log("Reseted by wdt");
+                    break;
+                }
+            }
+
         }
     }
+
+   //return result_array;
+}
+
+function execute_object(struct){
+
+    //console.log(struct.object);
+    let text = struct.object.text.trim();
+    if(text.length!=0) text = " " + text;
+
+    if(struct.object.type=="line"){
+        console.log("ERROR: Should not be here");
+    }else if(struct.object.type=="comment"){
+        console.log("ERROR: Should not be here" + text);
+    }else if(struct.object.type=="condition"){
+        console.log("Condition object" + text);
+        return struct.output[0];
+    }else if(struct.object.type=="event"){
+        execute_event(struct.object);
+        console.log("Event object" + text);
+        return struct.output[0];
+    }else if(struct.object.type=="start"){
+        console.log("Start object" + text);
+        return struct.output[0];
+    }else if(struct.object.type=="finish"){
+        console.log("Finish!" + text);
+        return struct.object;
+    } 
+    
+    return;
+
+}
+
+function execute_event(event_obj){
+    //console.log(event_obj);
+
+
+    for(let res_ch in event_obj.resource_changing){
+        let ch_exp = event_obj.resource_changing[res_ch].trim();
+        
+        // Parsing Resource change ecpression
+        let exp_operation = ch_exp[0];
+        let exp_value = ch_exp.substr(1);
+
+        //console.log(ch_exp);
+        let res = resources_values_run;
+        let param = getParametersValueArray();
+
+        if(exp_operation=="="){
+
+        }
+
+    }
+}
+
+function getResourcesValueArray(){
+    // preparing resource array
+    let array = {};
+    for(let res_i in Resources.list){
+        let res = Resources.list[res_i];
+        array[res.name] = 0;
+    }
+    return array;
+}
+
+function getParametersValueArray(){
+    // preparing parameters array
+    let array = {};
+    for(let param_i in Parameters.list){
+        let param = Parameters.list[param_i];
+        array[param.name] = param.value;
+    }
+    return array;
 }

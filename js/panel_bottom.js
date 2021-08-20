@@ -113,6 +113,7 @@ function startFunction_panelBottom(){
     }
 
     panelBottom.content_result.setResult = function(resultList, doNotSetVisible){
+        //console.log(resultList);
         this.innerHTML = "";
         if(!resultList) resultList = [];
         if(resultList.length==0){
@@ -121,9 +122,10 @@ function startFunction_panelBottom(){
 
         for(resultList_i in resultList){
             result = resultList[resultList_i];
-
+            //console.log(result);
             this.appendChild(result.content);
         }
+        
 
         if(doNotSetVisible!=true) panelBottom.setVisible(true);
     
