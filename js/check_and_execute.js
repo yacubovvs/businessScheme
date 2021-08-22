@@ -53,40 +53,74 @@ function run_from_start(resultStruct){
         let obj_start = related_objects_run[obj_start_i];
         //console.log(obj_start);
         if(obj_start.object.type=="start"){
-            let wdt = 0;
 
-            resources_values_run = getResourcesValueArray();
-            param_values_run = getParametersValueArray();
-            let next_struct = execute_object(obj_start).get_related_objects();
-            while(next_struct){
+            let repeat_value = obj_start.object.run_repeats;
+            if(!obj_start.object.not_once_run_repeat())repeat_value = 1;
+            
+            let result_resource_array = [];
+            let result_finish_array = [];
 
-                //console.log(next_object);
-                next_object = execute_object(next_struct);
-                if(next_object!=undefined){
+            for(let reapeat = 0; reapeat<repeat_value; reapeat++){
 
-                    if(next_object.type=="finish"){
-                        execute_object(next_object.get_related_objects());
-                        
-                        let res_result = ResultResourcesTable("Resources on Start " + obj_start.object.text + " - Finish " + next_object.text, resources_values_run);
+                let wdt = 0;
+                //let result_resource_array = [];
+                //let result_finish_array = [];
+
+                resources_values_run = getResourcesValueArray();
+                param_values_run = getParametersValueArray();
+                let next_struct = execute_object(obj_start).get_related_objects();
+                while(next_struct){
+
+                    //console.log(next_object);
+                    next_object = execute_object(next_struct);
+                    if(next_object!=undefined){
+
+                        if(next_object.type=="finish"){
+                            execute_object(next_object.get_related_objects());
+                            if(obj_start.object.not_once_run_repeat()){
+                                result_resource_array.push(resources_values_run);
+                                result_finish_array.push(next_object);
+                            }else{
+                                let res_result = new ResultResourcesTable("Resources on Start " + obj_start.object.text + " - Finish " + next_object.text, resources_values_run);
+                                resultStruct.push(res_result);
+                            }
+                            
+                            
+                            
+                            // FINISHING
+                            break;
+                        }
+
+                        next_struct = next_object.get_related_objects();
+                    }
+                    
+                    wdt ++;
+                    if (wdt>obj_start.object.wdt){
+                        //console.log("Reseted by wdt");
+
+                        let res_result = Error_wdtReset(obj_start.object);
                         resultStruct.push(res_result);
-                        
-                        // FINISHING
                         break;
                     }
-
-                    next_struct = next_object.get_related_objects();
                 }
-                
-                wdt ++;
-                if (wdt>obj_start.object.wdt){
-                    //console.log("Reseted by wdt");
 
-                    let res_result = Error_wdtReset(obj_start.object);
+            }
+            if(obj_start.object.not_once_run_repeat()){
+                // creating probility result
+                //console.log("At probility result we got:");
+                //console.log(result_resource_array);
+                //console.log(result_finish_array);
+
+                if(obj_start.object.result_type=="probality_recourse_table" || obj_start.object.result_type=="probality_recourse_finish_table"){
+                    let res_result = ResultProbabilityResourcesTable("Result probability table", result_resource_array);
                     resultStruct.push(res_result);
-                    break;
+                }
+
+                if(obj_start.object.result_type=="probality_finish_table" || obj_start.object.result_type=="probality_recourse_finish_table"){
+                    let res_result = ResultProbabilityFinishTable("Finish probability table", result_finish_array);
+                    resultStruct.push(res_result);
                 }
             }
-
         }
     }
 

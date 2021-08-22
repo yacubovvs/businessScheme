@@ -14,3 +14,21 @@
     width: calc(100%);
     overflow: auto;
 }
+
+.finish_probability_table{
+    margin-top: 10px;
+    width: 100%;
+}
+
+.finish_probability_table_result_td{
+    height: 150px;
+}
+
+.finish_probability_table_result_td_div_bg{
+    height: 50%;
+}
+
+.finish_probability_table_result_td_div_result{
+    height: 50%;
+    background-color: rgba(102, 5, 5, 0.767);
+}

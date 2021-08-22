@@ -14,7 +14,7 @@ function Start(loaded_object){
 
 
     object.not_once_run_repeat = function(){
-        return object.result_type=="probality_recourse_table" || object.result_type=="probality_finish_table";
+        return object.result_type=="probality_recourse_table" || object.result_type=="probality_recourse_finish_table" ||object.result_type=="probality_finish_table";
     }
     object.get_run_repeats = function(){
         if(this.not_once_run_repeat()){
@@ -92,6 +92,7 @@ function Start(loaded_object){
                     new PanelObject_select_list_element("Resource list", "resourse_list"),
                     new PanelObject_select_list_element("Probability recourse table", "probality_recourse_table"),
                     new PanelObject_select_list_element("Probability finish table", "probality_finish_table"),
+                    new PanelObject_select_list_element("Probability recourse and finish table", "probality_recourse_finish_table"),
                 ],
                 function(value){object.result_type = value; panelSide.draw();}
             ),
