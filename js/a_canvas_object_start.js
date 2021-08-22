@@ -10,6 +10,19 @@ function Start(loaded_object){
     object.visible = true;
     object.wdt = 100;
     object.result_type = "resourse_list";
+    object.run_repeats = 1;
+
+
+    object.not_once_run_repeat = function(){
+        return object.result_type=="probality_recourse_table" || object.result_type=="probality_finish_table";
+    }
+    object.get_run_repeats = function(){
+        if(this.not_once_run_repeat()){
+            return object.run_repeats;
+        }else{
+            return 1;
+        }
+    }
 
     let onum = 1;
     for(obj_i in ACanvas.objects){
@@ -66,9 +79,12 @@ function Start(loaded_object){
             new PanelObject_label("Text:"),
             new PanelObject_input_textArea(object.text, function(value){object.text = value;}, function(obj){ACanvas.draw();}),
 
+            new PanelObject_spacer(4),
+
             new PanelObject_label("WDT steps:"),
             new PanelObject_input_number(object.wdt, 100, function(value){object.wdt = value;}),
 
+            new PanelObject_spacer(4),
             new PanelObject_label("Result type:"),
             new PanelObject_select_list(
                 object.result_type,
@@ -77,13 +93,18 @@ function Start(loaded_object){
                     new PanelObject_select_list_element("Probability recourse table", "probality_recourse_table"),
                     new PanelObject_select_list_element("Probability finish table", "probality_finish_table"),
                 ],
-                function(value){object.result_type = value;}
+                function(value){object.result_type = value; panelSide.draw();}
             ),
-
-            new PanelObject_spacer(10),
-            new PanelObject_btn("Cancel selection", function(obj){common_reset_any_actions(); ACanvas.draw(); panelSide.draw();}),
-            
         ];
+
+        if(this.not_once_run_repeat()){
+            draw_struct.push(new PanelObject_spacer(4));  
+            draw_struct.push(new PanelObject_label("Run repeats:"));
+            draw_struct.push(new PanelObject_input_number(object.run_repeats, 100, function(value){object.run_repeats = value;}));
+        }
+
+        draw_struct.push(new PanelObject_spacer(10));
+        draw_struct.push(new PanelObject_btn("Cancel selection", function(obj){common_reset_any_actions(); ACanvas.draw(); panelSide.draw();}))
         
         return draw_struct;
     }
