@@ -15,6 +15,14 @@ function Error_object(object, errorText){
     return error;
 }
 
+function Error_wdtReset(object){
+    console.log(object);
+    let error = new Error("Reseted by WDT: " + " Start " + object.text);
+    error.object = object;
+    _errors_add_btn_scroll_to_object(error.content, "go to object", object)
+    return error;
+}
+
 function Error_pointObject(object, point, errorText){
     let error = new Error_object(object, errorText);
     error.point = point;

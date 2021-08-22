@@ -77,3 +77,39 @@
     min-height: 60px;
 }
 
+/*
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+        SELECT LIST SIDE MENU
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*/
+
+.panel_side_element_select_list{
+    background-color: white;
+    min-height: 10px;
+    max-height: 250px;
+    border-radius: 6px;
+    overflow: auto;
+}
+
+.panel_side_element_select_list-element{
+    color: black;
+    padding: 5px;
+    /*padding-left: 10px;*/
+    border-bottom: 1px solid black;
+}
+
+.panel_side_element_select_list-element:hover{
+    background-color: rgb(206, 206, 206);
+}
+
+.panel_side_element_select_list-select{
+    background-color: rgb(18, 18, 18);
+    color: rgb(240, 240, 240);;
+    padding: 5px;
+    /*padding-left: 10px;*/
+    border-bottom: 1px solid black;
+}
+
+.panel_side_element_select_list-select:hover{
+    background-color: rgb(36, 36, 36);
+}

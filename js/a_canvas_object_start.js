@@ -8,6 +8,8 @@ function Start(loaded_object){
     object.colorFill = "rgba(0,255,0,0.1)";
     object.fontSize = 32;
     object.visible = true;
+    object.wdt = 100;
+    object.result_type = "resourse_list";
 
     let onum = 1;
     for(obj_i in ACanvas.objects){
@@ -64,8 +66,23 @@ function Start(loaded_object){
             new PanelObject_label("Text:"),
             new PanelObject_input_textArea(object.text, function(value){object.text = value;}, function(obj){ACanvas.draw();}),
 
+            new PanelObject_label("WDT steps:"),
+            new PanelObject_input_number(object.wdt, 100, function(value){object.wdt = value;}),
+
+            new PanelObject_label("Result type:"),
+            new PanelObject_select_list(
+                object.result_type,
+                [
+                    new PanelObject_select_list_element("Resource list", "resourse_list"),
+                    new PanelObject_select_list_element("Probability recourse table", "probality_recourse_table"),
+                    new PanelObject_select_list_element("Probability finish table", "probality_finish_table"),
+                ],
+                function(value){object.result_type = value;}
+            ),
+
             new PanelObject_spacer(10),
             new PanelObject_btn("Cancel selection", function(obj){common_reset_any_actions(); ACanvas.draw(); panelSide.draw();}),
+            
         ];
         
         return draw_struct;

@@ -78,7 +78,7 @@ function startFunction_panelSide(){
     }
 
     panelSide.draw();
-    //panelSide.setVisible(true);
+    panelSide.setVisible(true);
 }
 
 window.addEventListener('load', startFunction_panelSide);

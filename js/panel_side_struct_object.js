@@ -100,6 +100,44 @@ function PanelObject_btn(text, handler){
     return object;
 }
 
+function PanelObject_select_list(current_value, list, onSelectFunction){
+    let object = panelObject();
+
+    object.classList.add("panel_side_element_select_list");
+
+    for(let list_i in list){
+        let element = list[list_i];
+        element.obj = document.createElement('div');
+        element.obj.classList.add("panel_side_element_select_list-element");
+        object.appendChild(element.obj)
+        element.obj.innerText = element.text;
+
+        element.obj.onclick = function(){ 
+            for(let list_i in list){
+                let element = list[list_i];
+                element.obj.classList.remove("panel_side_element_select_list-select");
+            }
+            element.obj.classList.add("panel_side_element_select_list-select");
+            onSelectFunction(element.value); 
+        }
+
+        if(current_value == element.value){
+            element.obj.classList.add("panel_side_element_select_list-select");
+        }
+        
+    }
+
+    return object;
+}
+
+function PanelObject_select_list_element(text, value){
+    let element = {
+        text: text,
+        value: value
+    }
+    return element;
+}
+
 function PanelObject_resources_list(){
 
     let object = panelObject();

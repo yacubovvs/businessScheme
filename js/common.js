@@ -180,3 +180,37 @@ function getFontHeight(font) {
 function Point(x,y){
     return {x:x, y:y};
 }
+
+function min(x1, x2){
+    return Math.min(x1, x2);
+}
+
+function max(x1, x2){
+    return Math.max(x1, x2);
+}
+
+function random(x1,x2){
+    let d = min(x1,x2) + max(x1,x2)
+    return  min(x1,x2) + Math.random()*d;
+}
+
+function randomInt(x1,x2){
+    let d = min(x1,x2) - max(x1,x2)
+    return Math.round(random(x1,x2));
+}
+
+function int(x){
+    return Math.float(x)
+}
+
+function round(x){
+    return Math.round(x)
+}
+
+function pow(x, n){
+    return Math.pow(x,n);
+}
+
+function sqrt(x){
+    return Math.sqrt(x);
+}

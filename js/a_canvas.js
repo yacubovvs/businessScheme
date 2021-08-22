@@ -7,7 +7,7 @@ function startFunction_ACanvas(){
     ACanvas = document.getElementById('mainACanvas');
     ACanvas.initted = false; // Флаг инициализации
     ACanvas.selecting_dot = false;
-    ACanvas.app_version = 1;
+    ACanvas.app_version = "0.0";
 
     ACanvas.user_settings_opened = false;
 
@@ -532,6 +532,7 @@ function startFunction_ACanvas(){
 
             new PanelObject_spacer(7),
             new PanelObject_label("App version: " + this.app_version),
+
         ];
     }
 

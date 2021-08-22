@@ -53,15 +53,10 @@ function run_from_start(resultStruct){
         let obj_start = related_objects_run[obj_start_i];
         //console.log(obj_start);
         if(obj_start.object.type=="start"){
-            //console.log("Found start");
-            //console.log(obj_start);
+            let wdt = 0;
 
-            // Step 2: starting emulation
-            // clearing resources
             resources_values_run = getResourcesValueArray();
             param_values_run = getParametersValueArray();
-
-            let wdt = 0;
             let next_struct = execute_object(obj_start).get_related_objects();
             while(next_struct){
 
@@ -72,7 +67,7 @@ function run_from_start(resultStruct){
                     if(next_object.type=="finish"){
                         execute_object(next_object.get_related_objects());
                         
-                        let res_result = ResultResourcesTable("Resources on finish " + next_object.text, resources_values_run);
+                        let res_result = ResultResourcesTable("Resources on Start " + obj_start.object.text + " - Finish " + next_object.text, resources_values_run);
                         resultStruct.push(res_result);
                         
                         // FINISHING
@@ -83,8 +78,11 @@ function run_from_start(resultStruct){
                 }
                 
                 wdt ++;
-                if (wdt>100){
-                    console.log("Reseted by wdt");
+                if (wdt>obj_start.object.wdt){
+                    //console.log("Reseted by wdt");
+
+                    let res_result = Error_wdtReset(obj_start.object);
+                    resultStruct.push(res_result);
                     break;
                 }
             }
@@ -106,17 +104,20 @@ function execute_object(struct){
     }else if(struct.object.type=="comment"){
         console.log("ERROR: Should not be here" + text);
     }else if(struct.object.type=="condition"){
-        console.log("Condition object" + text);
-        return struct.output[0];
+        //console.log("Condition object" + text);
+        result = execute_condition(struct.object);
+        if(result) return struct.output[0];
+        else return struct.output_false[0];
+        
     }else if(struct.object.type=="event"){
         execute_event(struct.object);
-        console.log("Event object" + text);
+        //console.log("Event object" + text);
         return struct.output[0];
     }else if(struct.object.type=="start"){
-        console.log("Start object" + text);
+        //console.log("Start object" + text);
         return struct.output[0];
     }else if(struct.object.type=="finish"){
-        console.log("Finish!" + text);
+        //console.log("Finish!" + text);
         return struct.object;
     } 
     
@@ -124,10 +125,19 @@ function execute_object(struct){
 
 }
 
+function execute_condition(condition_obj){
+    //console.log(condition_obj);
+    let condition_text = condition_obj.condition_text;
+    let res = resources_values_run;
+    let param = getParametersValueArray();
+
+    let result = eval(condition_text);
+    return result;
+}
+
+
 function execute_event(event_obj){
     //console.log(event_obj);
-
-
     for(let res_ch in event_obj.resource_changing){
         let ch_exp = event_obj.resource_changing[res_ch].trim();
         
@@ -146,7 +156,17 @@ function execute_event(event_obj){
         //console.log(exp_value_eval);
         if(exp_operation=="="){
             resources_values_run[resname] = exp_value_eval;
-            
+        }else if(exp_operation=="-"){
+            resources_values_run[resname] -= exp_value_eval;
+        }else if(exp_operation=="+"){
+            resources_values_run[resname] += exp_value_eval;
+        }else if(exp_operation=="*"){
+            resources_values_run[resname] *= exp_value_eval;
+        }else if(exp_operation=="/"){
+            resources_values_run[resname] /= exp_value_eval;
+        }else{
+            //resources_values_run[resname] = exp_value_eval;
+            //doing nothing
         }
 
     }
