@@ -66,4 +66,6 @@ function pannel_load_clicked(){
 function reizePanels(){
     if(panelSide._isVisible) panelBottom.setWidth(window.innerWidth - panelSide.content.width - 7);
     else panelBottom.setWidth(window.innerWidth);
+
+    _notify_resize_panels_listeners();
 }

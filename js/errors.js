@@ -52,7 +52,7 @@ function InProgress(){
 }
 
 function NoErrors(){
-    let error = new Error("No error");
+    let error = new Error("No errors");
     error.content.classList.add("main_bottom_panel-body-error_error-no_error");
     return error;
 }

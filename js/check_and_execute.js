@@ -58,6 +58,7 @@ function run_from_start(resultStruct){
             if(!obj_start.object.not_once_run_repeat())repeat_value = 1;
             
             let result_resource_array = [];
+            let result_resource_array_finish = {}
             let result_finish_array = [];
 
             for(let reapeat = 0; reapeat<repeat_value; reapeat++){
@@ -78,6 +79,10 @@ function run_from_start(resultStruct){
                         if(next_object.type=="finish"){
                             execute_object(next_object.get_related_objects());
                             if(obj_start.object.not_once_run_repeat()){
+                                if(result_resource_array_finish[next_object.id]==undefined){
+                                    result_resource_array_finish[next_object.id] = [];
+                                    result_resource_array_finish[next_object.id].push(resources_values_run);
+                                }
                                 result_resource_array.push(resources_values_run);
                                 result_finish_array.push(next_object);
                             }else{
@@ -112,8 +117,26 @@ function run_from_start(resultStruct){
                 //console.log(result_finish_array);
 
                 if(obj_start.object.result_type=="probality_recourse_table" || obj_start.object.result_type=="probality_recourse_finish_table"){
-                    let res_result = ResultProbabilityResourcesTable("Result probability table", result_resource_array);
-                    resultStruct.push(res_result);
+                    let resources_for_result = {};
+                    //console.log(result_resource_array_finish);
+                    //console.log(result_resource_array);
+                    
+                    for(let res_i in result_resource_array){
+                        let res_obj = result_resource_array[res_i];
+                        for(let res_obj_i in res_obj){
+                            let value = res_obj[res_obj_i];
+                            if(resources_for_result[res_obj_i]==undefined) resources_for_result[res_obj_i] = [];
+                            resources_for_result[res_obj_i].push(value);
+                        }
+                    }
+                    //console.log(resources_for_result);
+
+                    for(let resources_for_result_i in resources_for_result){
+                        pre_result = resources_for_result[resources_for_result_i];
+                        let res_result = ResultProbabilityResourcesTable("" + resources_for_result_i + " result probability table", undefined, pre_result);
+                        resultStruct.push(res_result);
+                        res_result.draw();
+                    }
                 }
 
                 if(obj_start.object.result_type=="probality_finish_table" || obj_start.object.result_type=="probality_recourse_finish_table"){
