@@ -540,13 +540,29 @@ function startFunction_ACanvas(){
     ACanvas.user_selections = [];
 
     ACanvas.scroll_to_object = function(obj){
-        console.log("Scrolling to object");
-        console.log(obj);
+        //console.log("Scrolling to object");
+        //console.log(obj);
+
+        //let object = ACanvas.user_selections[0];
+        //let aCanvas = ACanvas;
+    
+        ACanvas.user_selections = [obj];
+        panelSide.property_object = obj;
+        panelSide.draw();
+        this.scroll_to_point(obj.position);
     }
 
     ACanvas.scroll_to_point = function(point){
-        console.log("Scrolling to point");
-        console.log(point);
+        this.zoom = 1;
+        let coordinates = getRealCoordinates(this, point);
+    
+        this.scroll.x -= coordinates.x;
+        this.scroll.y -= coordinates.y;
+    
+        this.scroll.x += (this.zoom * this.width)/2 + panelSide.offsetWidth/2;
+        this.scroll.y += (this.zoom * this.height)/2 - panelBottom.offsetHeight/2;
+    
+        this.draw();
     }
 
     ACanvas.draw();

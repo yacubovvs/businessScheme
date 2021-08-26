@@ -214,3 +214,14 @@ function pow(x, n){
 function sqrt(x){
     return Math.sqrt(x);
 }
+
+function getRealCoordinates(aCanvas, point){
+    let coordinates_realSize = aCanvas._settings._draw_coordinates_size*aCanvas.zoom;
+    let drawing_shift_x = aCanvas._get_drawing_shift_x();
+    let drawing_shift_y = aCanvas._get_drawing_shift_y();
+
+    return {
+        x: point.x*coordinates_realSize + drawing_shift_x,
+        y: point.y*coordinates_realSize + drawing_shift_y
+    }
+}

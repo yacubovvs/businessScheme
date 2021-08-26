@@ -76,6 +76,11 @@ function _errors_add_btn_scroll_to_point(container, text, point){
     let resource_add_button = document.createElement("div");
     resource_add_button.classList.add("bottom_pannel_inError-btn");
     resource_add_button.innerText = text;
-    resource_add_button.onclick = function(){ACanvas.scroll_to_point(point);};
+    resource_add_button.onclick = function(){
+        ACanvas.user_selections = [];
+        panelSide.property_object = ACanvas;
+        panelSide.draw();
+        ACanvas.scroll_to_point(point);
+    };
     container.appendChild(resource_add_button);
 }
