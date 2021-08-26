@@ -191,7 +191,7 @@ function max(x1, x2){
 
 function random(x1,x2){
     let d = min(x1,x2) + max(x1,x2)
-    return  min(x1,x2) + Math.random()*d;
+    return  min(x1,x2) + Math.random()*d + 0.5;
 }
 
 function randomInt(x1,x2){

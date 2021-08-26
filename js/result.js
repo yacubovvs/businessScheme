@@ -159,7 +159,7 @@ function ResultProbabilityResourcesTable(text, finish_obj, resourcesStructArray)
         context.strokeStyle = 'rgba(165,165,165)';
         for(let value_i in canvas.columns_array){
             let value = canvas.columns_array[value_i];
-            let c_x = coordinates_x_offset + value_i*element_width + element_width;
+            let c_x = coordinates_x_offset + value_i*element_width + element_width/2;
             let c_y = coordinates_y_offset - graph_height*(value/canvas.max_probability) + graph_height;
 
             if(value_i==0){
@@ -176,7 +176,7 @@ function ResultProbabilityResourcesTable(text, finish_obj, resourcesStructArray)
         for(let value_i in canvas.columns_array){
             let value = canvas.columns_array[value_i];
 
-            let c_x = coordinates_x_offset + value_i*element_width + element_width;
+            let c_x = coordinates_x_offset + value_i*element_width + element_width/2;
             let c_y = coordinates_y_offset - graph_height*(value/canvas.max_probability) + graph_height;
             drawCircle(context, c_x, c_y, 3, 2, true, true, "rgb(128,0,0)", "rgb(128,64,64)");
         }

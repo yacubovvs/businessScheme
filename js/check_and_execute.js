@@ -24,11 +24,13 @@ function check_project(){
     }
 
     //console.log(errors);
-    panelBottom.content_error.setErrors(errors);
+    
     if(errors.length==0){
-        return true;
-    }else{
+        panelBottom.content_error.setErrors([]);
         return false;
+    }else{
+        panelBottom.content_error.setErrors(errors);
+        return true;
     }
 }
 
