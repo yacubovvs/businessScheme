@@ -596,7 +596,11 @@ function aCanvas_drawDots(aCanvas, context){
 }
 
 
-window.addEventListener('load', startFunction_ACanvas);
+window.addEventListener('load', function(){
+    startFunction_ACanvas();
+    load_file_from_hash();
+});
+
 window.addEventListener('resize', function(){
     if(ACanvas!=undefined) if(ACanvas.initted) ACanvas.draw();
     //ACanvas.draw();
