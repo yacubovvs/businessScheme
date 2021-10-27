@@ -300,6 +300,13 @@ function Canvas_object(object_to_load){
     // ACanvas.objects[2].get_related_objects();
     canvas_object.get_related_objects = function(aCanvas){
         if(!aCanvas) aCanvas = ACanvas;
+
+        if(aCanvas.related_objects_hash==canvas_object.related_objects_hash){
+            //console.log("Use hashed related objects " + aCanvas)
+            return canvas_object.related_objects;
+        }else{
+            //console.log("Use new related objects " + aCanvas)
+        }
         
         let related_objects = {
             object: this,
@@ -460,9 +467,14 @@ function Canvas_object(object_to_load){
 
         }
 
+        canvas_object.related_objects = related_objects;
+        canvas_object.related_objects_hash = aCanvas.related_objects_hash;
         return related_objects;
 
     }
+
+    canvas_object.related_objects = null;
+    canvas_object.related_objects_hash = "";
 
     return canvas_object;
 }

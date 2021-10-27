@@ -35,6 +35,7 @@ function check_project(){
 }
 
 function run_project(){
+    ACanvas.related_objects_hash = get_uid();
     let has_errors = check_project();
     if(has_errors) return;
     

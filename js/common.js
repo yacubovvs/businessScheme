@@ -63,7 +63,8 @@ function roundedRect(context, x, y, width, height, radius, lineWidth, stroke, fi
 }
 
 function get_uid(){
-    return Math.random().toString(32).slice(2);
+    //return Math.random().toString(32).slice(2);
+    return Math.random().toString(32).slice(2) + "-" + Math.random().toString(32).slice(2) + "-" + Math.random().toString(32).slice(2);
 }
 
 function checkLinesCrossing(p1, p2, p3, p4) {
