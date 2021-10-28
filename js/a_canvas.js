@@ -7,7 +7,7 @@ function startFunction_ACanvas(){
     ACanvas = document.getElementById('mainACanvas');
     ACanvas.initted = false; // Флаг инициализации
     ACanvas.selecting_dot = false;
-    ACanvas.app_version = "0.1";
+    ACanvas.app_version = "0.2";
 
     ACanvas.user_settings_opened = false;
 
